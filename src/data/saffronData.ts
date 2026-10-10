@@ -1,3 +1,15 @@
+import heroImg from '../assets/images/hero_saffron_harvest_1791656835444.jpg';
+import botanicalImg from '../assets/images/cultivation_botanical_closeup_1791656883136.jpg';
+import indoorImg from '../assets/images/indoor_aeroponic_saffron_1791657645029.jpg';
+import honeyImg from '../assets/images/product_saffron_honey_1791657619300.jpg';
+import teaImg from '../assets/images/product_saffron_tea_1791657631464.jpg';
+import cormsImg from '../assets/images/product_saffron_corms_1791656873174.jpg';
+import mongraImg from '../assets/images/product_kashmiri_mongra_1791656861311.jpg';
+import neginImg from '../assets/images/product_super_negin_jar_1791656850551.jpg';
+import trainingImg from '../assets/images/bg_training_academy_1791658774822.jpg';
+import techImg from '../assets/images/bg_technology_iot_1791658787855.jpg';
+import mediaImg from '../assets/images/bg_media_editorial_1791658801024.jpg';
+
 export type PageId =
   | 'Home'
   | 'Shop'
@@ -77,17 +89,17 @@ export interface LabBatchRecord {
   dryingProtocol: string;
 }
 
-export const HERO_IMAGE = '/src/assets/images/hero_saffron_harvest_1791656835444.jpg';
-export const BOTANICAL_IMAGE = '/src/assets/images/cultivation_botanical_closeup_1791656883136.jpg';
-export const INDOOR_TECH_IMAGE = '/src/assets/images/indoor_aeroponic_saffron_1791657645029.jpg';
-export const HONEY_IMAGE = '/src/assets/images/product_saffron_honey_1791657619300.jpg';
-export const TEA_IMAGE = '/src/assets/images/product_saffron_tea_1791657631464.jpg';
-export const CORMS_IMAGE = '/src/assets/images/product_saffron_corms_1791656873174.jpg';
-export const MONGRA_IMAGE = '/src/assets/images/product_kashmiri_mongra_1791656861311.jpg';
-export const NEGIN_IMAGE = '/src/assets/images/product_super_negin_jar_1791656850551.jpg';
-export const TRAINING_BG_IMAGE = '/src/assets/images/bg_training_academy_1791658774822.jpg';
-export const TECH_BG_IMAGE = '/src/assets/images/bg_technology_iot_1791658787855.jpg';
-export const MEDIA_BG_IMAGE = '/src/assets/images/bg_media_editorial_1791658801024.jpg';
+export const HERO_IMAGE = heroImg;
+export const BOTANICAL_IMAGE = botanicalImg;
+export const INDOOR_TECH_IMAGE = indoorImg;
+export const HONEY_IMAGE = honeyImg;
+export const TEA_IMAGE = teaImg;
+export const CORMS_IMAGE = cormsImg;
+export const MONGRA_IMAGE = mongraImg;
+export const NEGIN_IMAGE = neginImg;
+export const TRAINING_BG_IMAGE = trainingImg;
+export const TECH_BG_IMAGE = techImg;
+export const MEDIA_BG_IMAGE = mediaImg;
 
 export const PAGE_HERO_BACKGROUNDS: Record<PageId, string> = {
   Home: HERO_IMAGE,
