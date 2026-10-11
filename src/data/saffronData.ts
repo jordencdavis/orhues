@@ -9,7 +9,7 @@ import neginImg from '../assets/images/product_super_negin_jar_1791656850551.jpg
 import trainingImg from '../assets/images/bg_training_academy_1791658774822.jpg';
 import techImg from '../assets/images/bg_technology_iot_1791658787855.jpg';
 import mediaImg from '../assets/images/bg_media_editorial_1791658801024.jpg';
-import orhuesLogoImg from '../assets/images/orhues-logo.svg';
+import orhuesLogoImg from '../assets/images/orhues-logo.webp';
 
 export type PageId =
   | 'Home'
