@@ -196,12 +196,12 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 <button
                   type="button"
                   onClick={handleBuy}
-                  className="flex-1 py-3.5 px-5 rounded-xl bg-[#9E1B1B] hover:bg-[#7F1515] text-white text-sm font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                  className="flex-1 py-3.5 px-5 rounded-xl bg-[#8B4500] hover:bg-[#6E3600] text-white text-sm font-medium flex items-center justify-center gap-2 transition-colors cursor-pointer whitespace-nowrap shrink-0"
                 >
                   {addedFeedback ? (
                     <>
                       <Check className="w-4 h-4" />
-                      <span>Added to Estate Bag</span>
+                      <span>Added to Orhues Bag</span>
                     </>
                   ) : (
                     <span>

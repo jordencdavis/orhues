@@ -9,11 +9,14 @@ import neginImg from '../assets/images/product_super_negin_jar_1791656850551.jpg
 import trainingImg from '../assets/images/bg_training_academy_1791658774822.jpg';
 import techImg from '../assets/images/bg_technology_iot_1791658787855.jpg';
 import mediaImg from '../assets/images/bg_media_editorial_1791658801024.jpg';
+import orhuesLogoImg from '../assets/images/orhues-logo.svg';
 
 export type PageId =
   | 'Home'
   | 'Shop'
   | 'Our Story'
+  | 'Indoor Cultivation'
+  | 'About Us'
   | 'Our Services'
   | 'Training'
   | 'Infrastructure'
@@ -100,11 +103,14 @@ export const NEGIN_IMAGE = neginImg;
 export const TRAINING_BG_IMAGE = trainingImg;
 export const TECH_BG_IMAGE = techImg;
 export const MEDIA_BG_IMAGE = mediaImg;
+export const ORHUES_LOGO = orhuesLogoImg;
 
 export const PAGE_HERO_BACKGROUNDS: Record<PageId, string> = {
   Home: HERO_IMAGE,
   Shop: NEGIN_IMAGE,
   'Our Story': HERO_IMAGE,
+  'Indoor Cultivation': BOTANICAL_IMAGE,
+  'About Us': HERO_IMAGE,
   'Our Services': INDOOR_TECH_IMAGE,
   Training: TRAINING_BG_IMAGE,
   Infrastructure: INDOOR_TECH_IMAGE,

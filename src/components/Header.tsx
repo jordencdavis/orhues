@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PageId } from '../data/saffronData';
+import { PageId, ORHUES_LOGO } from '../data/saffronData';
 import { ChevronDown, ShoppingBag, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
@@ -17,7 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenCart,
   onOpenHelp
 }) => {
-  const [openDropdown, setOpenDropdown] = useState<'services' | 'media' | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<'story' | 'services' | 'media' | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNavClick = (page: PageId) => {
@@ -26,6 +26,11 @@ export const Header: React.FC<HeaderProps> = ({
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const isStoryGroup =
+    activePage === 'Our Story' ||
+    activePage === 'Indoor Cultivation' ||
+    activePage === 'About Us';
 
   const isServicesGroup =
     activePage === 'Our Services' ||
@@ -41,94 +46,18 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-40 bg-white border-b border-[#EAE0D2]">
       <div className="max-w-[1360px] mx-auto px-6 lg:px-12 h-24 flex items-center justify-between gap-6">
-        {/* Left: ORHUES Emblem & Wordmark */}
+        {/* Left: ORHUES Logo Image */}
         <button
           type="button"
           onClick={() => handleNavClick('Home')}
-          className="flex flex-col items-center justify-center group cursor-pointer shrink-0 focus:outline-none"
+          className="flex items-center justify-center group cursor-pointer shrink-0 focus:outline-none"
           aria-label="ORHUES — Go to Home page"
         >
-          {/* Golden Saffron Blossom Emblem */}
-          <svg
-            viewBox="0 0 80 48"
-            className="w-14 h-9 mb-0.5 transition-transform duration-200 group-hover:scale-105"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <linearGradient id="orhuesGold" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#D8AE5E" />
-                <stop offset="50%" stopColor="#9E6A21" />
-                <stop offset="100%" stopColor="#72460D" />
-              </linearGradient>
-            </defs>
-            {/* Outer Left & Right Golden Petals */}
-            <path
-              d="M38 42C24 40 12 31 10 20C18 19 29 26 38 42Z"
-              fill="url(#orhuesGold)"
-              opacity="0.88"
-            />
-            <path
-              d="M42 42C56 40 68 31 70 20C62 19 51 26 42 42Z"
-              fill="url(#orhuesGold)"
-              opacity="0.88"
-            />
-            {/* Mid Left & Right Golden Petals */}
-            <path
-              d="M39 41C27 33 21 20 24 9C32 13 37 25 39 41Z"
-              fill="url(#orhuesGold)"
-            />
-            <path
-              d="M41 41C53 33 59 20 56 9C48 13 43 25 41 41Z"
-              fill="url(#orhuesGold)"
-            />
-            {/* Center Upright Golden Petal */}
-            <path
-              d="M40 41C34 27 34 12 40 2C46 12 46 27 40 41Z"
-              fill="url(#orhuesGold)"
-            />
-            {/* Inner Light Highlights */}
-            <path
-              d="M40 37C37 26 37 15 40 7C43 15 43 26 40 37Z"
-              fill="#F8E5B8"
-              opacity="0.65"
-            />
-            {/* 3 Crimson Saffron Stigmas */}
-            <path
-              d="M40 39C38 30 35 23 33 19"
-              stroke="#A91D1D"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-            <circle cx="33" cy="19" r="1.5" fill="#A91D1D" />
-            <path
-              d="M40 39V16"
-              stroke="#A91D1D"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-            <circle cx="40" cy="16" r="1.6" fill="#A91D1D" />
-            <path
-              d="M40 39C42 30 45 23 47 19"
-              stroke="#A91D1D"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-            <circle cx="47" cy="19" r="1.5" fill="#A91D1D" />
-          </svg>
-
-          <span className="font-display text-2xl font-bold tracking-[0.14em] text-[#8A5A1E] leading-none">
-            ORHUES
-          </span>
-          <span className="text-[7px] font-semibold tracking-[0.18em] text-[#5C4932] uppercase mt-1">
-            RARE. REDEFINED. REVERED.
-          </span>
-          {/* Ornamental Flourish Line */}
-          <div className="flex items-center gap-1 mt-0.5">
-            <span className="w-6 h-[1px] bg-[#C5A478]" />
-            <span className="w-1.5 h-1.5 rotate-45 border border-[#9E6A21]" />
-            <span className="w-6 h-[1px] bg-[#C5A478]" />
-          </div>
+          <img
+            src={ORHUES_LOGO}
+            alt="ORHUES — Rare. Redefined. Revered."
+            className="h-20 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+          />
         </button>
 
         {/* Center: Primary Navigation Links */}
@@ -162,18 +91,58 @@ export const Header: React.FC<HeaderProps> = ({
             Shop
           </button>
 
-          {/* Our Story */}
-          <button
-            type="button"
-            onClick={() => handleNavClick('Our Story')}
-            className={`py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer border-b-2 ${
-              activePage === 'Our Story'
-                ? 'text-[#8B4500] border-[#8B4500] font-semibold'
-                : 'border-transparent hover:text-[#8B4500]'
-            }`}
+          {/* Our Story (Clickable + Dropdown for Indoor Cultivation & About Us) */}
+          <div
+            className="relative"
+            onMouseEnter={() => setOpenDropdown('story')}
+            onMouseLeave={() => setOpenDropdown(null)}
           >
-            Our Story
-          </button>
+            <button
+              type="button"
+              onClick={() => handleNavClick('Our Story')}
+              className={`py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer border-b-2 flex items-center gap-1.5 ${
+                isStoryGroup
+                  ? 'text-[#8B4500] border-[#8B4500] font-semibold'
+                  : 'border-transparent hover:text-[#8B4500]'
+              }`}
+            >
+              <span>Our Story</span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-150 ${
+                  openDropdown === 'story' ? 'rotate-180 text-[#8B4500]' : ''
+                }`}
+              />
+            </button>
+
+            {openDropdown === 'story' && (
+              <div className="absolute left-0 top-full pt-2 w-56 z-50">
+                <div className="bg-white rounded-xl border border-[#EAE0D2] shadow-lg py-2 overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => handleNavClick('Indoor Cultivation')}
+                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${
+                      activePage === 'Indoor Cultivation'
+                        ? 'bg-[#FCF8F2] text-[#8B4500] font-semibold'
+                        : 'text-[#4A4540] hover:bg-[#FCF8F2] hover:text-[#8B4500]'
+                    }`}
+                  >
+                    Indoor Cultivation
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleNavClick('About Us')}
+                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${
+                      activePage === 'About Us'
+                        ? 'bg-[#FCF8F2] text-[#8B4500] font-semibold'
+                        : 'text-[#4A4540] hover:bg-[#FCF8F2] hover:text-[#8B4500]'
+                    }`}
+                  >
+                    About Us
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Our Services (Clickable + Dropdown for Training & Infrastructure) */}
           <div
@@ -399,6 +368,8 @@ export const Header: React.FC<HeaderProps> = ({
               'Home',
               'Shop',
               'Our Story',
+              'Indoor Cultivation',
+              'About Us',
               'Our Services',
               'Training',
               'Infrastructure',

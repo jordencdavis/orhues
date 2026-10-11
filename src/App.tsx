@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
   PRODUCTS,
   LAB_BATCHES,
@@ -16,6 +16,8 @@ import {
   CORMS_IMAGE,
   HONEY_IMAGE,
   TEA_IMAGE,
+  TECH_BG_IMAGE,
+  TRAINING_BG_IMAGE,
   PAGE_HERO_BACKGROUNDS,
   PageId,
   SaffronProduct,
@@ -76,15 +78,17 @@ export default function App() {
   // Help / Question Modal state
   const [isHelpOpen, setIsHelpOpen] = useState<boolean>(false);
 
-  // Cart state
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      product: PRODUCTS[0],
-      variant: PRODUCTS[0].variants[1],
-      quantity: 1
-    }
-  ]);
+  // Cart state — initialized empty so items are only added when explicitly clicked by the user
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+
+  // Sync browser tab title with ORHUES branding and active page
+  useEffect(() => {
+    document.title =
+      activePage === 'Home'
+        ? 'ORHUES — Rare. Redefined. Revered. | Saffron Cultivation & Apothecary'
+        : `${activePage} | ORHUES — Rare. Redefined. Revered.`;
+  }, [activePage]);
 
   // ISO 3632 Laboratory Batch Inspector State
   const [selectedLotId, setSelectedLotId] = useState<string>(LAB_BATCHES[0].lotId);
@@ -98,6 +102,18 @@ export default function App() {
     'Turnkey Indoor Saffron Infrastructure Setup'
   );
   const [inquiryMessage, setInquiryMessage] = useState<string>('');
+
+  // Technology Page Cultivation Requirement Form State
+  const [techFormSubmitted, setTechFormSubmitted] = useState<boolean>(false);
+  const [techName, setTechName] = useState<string>('');
+  const [techPhone, setTechPhone] = useState<string>('');
+  const [techEmail, setTechEmail] = useState<string>('');
+  const [techCategory, setTechCategory] = useState<string>('Commercial Saffron Grower');
+  const [techRoomArea, setTechRoomArea] = useState<string>('');
+  const [techStageFocus, setTechStageFocus] = useState<string>(
+    'Both Flowering & Corm Multiplication Stages'
+  );
+  const [techNotes, setTechNotes] = useState<string>('');
 
   const selectedBatch = useMemo(
     () => LAB_BATCHES.find((b) => b.lotId === selectedLotId) || LAB_BATCHES[0],
@@ -431,19 +447,6 @@ export default function App() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#181615]/85 via-[#181615]/70 to-[#181615]/40" />
 
         <div className="relative z-10 max-w-[1280px] w-full mx-auto px-6">
-          <div className="flex flex-wrap items-center gap-2 text-xs text-[#E8C284] font-medium mb-3">
-            <button
-              type="button"
-              onClick={() => handleNavigate('Home')}
-              className="hover:underline text-white cursor-pointer"
-            >
-              Home
-            </button>
-            <span aria-hidden="true">/</span>
-            <span className="text-[#E8C284] font-semibold">{title}</span>
-            <span aria-hidden="true">·</span>
-            <span className="text-stone-200 font-normal">{kicker}</span>
-          </div>
           <h1
             className="font-display text-4xl sm:text-6xl font-semibold text-white tracking-tight mb-4"
             style={{ textWrap: 'balance' }}
@@ -630,8 +633,218 @@ export default function App() {
               'Direct from Orhues Apothecary & Corm Nursery',
               'Acquire ISO 3632 Category I Saffron Threads, Raw Saffron Infused Honey, Luxury Saffron Tea, and pre-vernalized Caliber 10/+ Crocus sativus mother corms.'
             )}
-            <section className="py-14 sm:py-16">
+            <section className="py-14 sm:py-16 space-y-16">
               {renderProductCatalog(false)}
+
+              {/* Moved Sections: Multi-Stage Quality & Purity Tests + Live Batch Certificate Verification */}
+              <div className="max-w-[1280px] mx-auto px-6 space-y-16 pt-8 border-t border-[#EAE0D2]">
+                {/* Multi-Stage Quality & Laboratory Tests */}
+                <div className="space-y-8">
+                  <div className="max-w-3xl">
+                    <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                      Multi-Stage Quality &amp; Purity Tests
+                    </div>
+                    <h2 className="font-display text-3xl font-semibold text-[#181615] mb-2">
+                      Four Mandatory Tests Performed on Every Orhues Batch
+                    </h2>
+                    <p className="text-sm text-[#4A4540] leading-relaxed">
+                      Before any jar of saffron threads, infused honey, luxury saffron tea, or crate of mother corms leaves our Thrissur facility, it must pass four rigorous physical, biological, and chemical verification protocols.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="p-6 rounded-2xl bg-white border border-[#EAE0D2] space-y-3">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold">
+                        TEST 01 · ISO 3632-2 UV-VIS
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Spectrophotometric Assay
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed">
+                        Aqueous extracts are scanned at <strong>440 nm</strong> (Crocin coloring ≥ 280), <strong>257 nm</strong> (Picrocrocin ≥ 94), and <strong>330 nm</strong> (Safranal 38–45) to verify Category I pharmaceutical potency.
+                      </p>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-white border border-[#EAE0D2] space-y-3">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold">
+                        TEST 02 · GRAVIMETRIC DRYING
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Moisture &amp; Volatile Matter
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed">
+                        Tested in a 103°C halogen moisture analyzer. While ISO Category I permits up to 12% moisture, Orhues cures all threads to <strong>8.4% – 9.2%</strong> so you pay for pure spice, not water weight.
+                      </p>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-white border border-[#EAE0D2] space-y-3">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold">
+                        TEST 03 · CHROMATOGRAPHY
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Zero-Dye &amp; Cold-Water Test
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed">
+                        Screened against Tartrazine, Sunset Yellow, and Red-40 synthetic dyes. In tepid water, authentic Orhues threads slowly diffuse a luminous golden halo while the stigma itself stays deep crimson.
+                      </p>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-white border border-[#EAE0D2] space-y-3">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold">
+                        TEST 04 · PHYTOSANITARY
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Pathogen &amp; Rot Screening
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed">
+                        Mother corm lots are random-sampled and incubated to guarantee 0% <em>Fusarium oxysporum</em>, <em>Rhizoctonia violacea</em>, or bulb mite infestation prior to grower dispatch.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Interactive ISO 3632-2 Batch Assay Inspector (Moved from Technology) */}
+                <div className="bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    <div className="lg:col-span-5">
+                      <div className="text-xs text-[#8B4500] font-semibold uppercase mb-2">
+                        Live Laboratory Verification
+                      </div>
+                      <h2 className="font-display text-3xl font-semibold text-[#181615] mb-3">
+                        ISO 3632-2 Batch Assay Inspector
+                      </h2>
+                      <p className="text-sm text-[#4A4540] leading-relaxed mb-6">
+                        Select an active Orhues batch below to inspect its spectrophotometric absorbance readings against international Grade I thresholds.
+                      </p>
+                      <div className="space-y-2.5">
+                        {LAB_BATCHES.map((batch) => {
+                          const isSelected = batch.lotId === selectedBatch.lotId;
+                          return (
+                            <button
+                              key={batch.lotId}
+                              type="button"
+                              onClick={() => setSelectedLotId(batch.lotId)}
+                              className={`w-full p-4 rounded-xl border text-left transition-colors flex items-center justify-between cursor-pointer ${
+                                isSelected
+                                  ? 'bg-[#8B4500] text-white border-[#8B4500]'
+                                  : 'bg-[#FCF9F4] text-[#181615] border-[#EAE0D2] hover:border-[#8B4500]'
+                              }`}
+                            >
+                              <div>
+                                <div className="font-mono-tabular text-xs font-semibold">
+                                  {batch.lotId} · {batch.cultivar}
+                                </div>
+                                <div
+                                  className={`text-xs mt-0.5 ${
+                                    isSelected ? 'text-stone-100' : 'text-[#635E59]'
+                                  }`}
+                                >
+                                  {batch.region}
+                                </div>
+                              </div>
+                              <span className="font-mono-tabular text-xs font-medium shrink-0">
+                                {batch.crocin440nm} Crocin
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="lg:col-span-7 bg-[#FCF9F4] rounded-2xl border border-[#EAE0D2] p-6 sm:p-8">
+                      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 mb-5 border-b border-[#EAE0D2]">
+                        <div>
+                          <div className="text-xs text-[#635E59] font-mono-tabular">
+                            CERTIFICATE OF ANALYSIS · {selectedBatch.lotId}
+                          </div>
+                          <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                            {selectedBatch.cultivar}
+                          </h3>
+                        </div>
+                        <span className="text-xs font-semibold text-[#8B4500]">
+                          ISO 3632 Category I Passed
+                        </span>
+                      </div>
+
+                      <div className="overflow-x-auto mb-6">
+                        <table className="w-full text-left border-collapse">
+                          <thead>
+                            <tr className="border-b border-[#DFCBB2] text-[11px] text-[#635E59]">
+                              <th className="py-2.5 pr-4 font-medium">Assay Parameter</th>
+                              <th className="py-2.5 px-4 font-medium">Method / Wavelength</th>
+                              <th className="py-2.5 px-4 font-medium">ISO Grade I Standard</th>
+                              <th className="py-2.5 pl-4 font-medium text-right">Orhues Result</th>
+                            </tr>
+                          </thead>
+                          <tbody className="text-xs sm:text-sm divide-y divide-[#EAE0D2] font-mono-tabular">
+                            <tr>
+                              <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
+                                Crocin (Coloring Strength)
+                              </td>
+                              <td className="py-3 px-4 text-[#635E59]">440 nm UV-Vis</td>
+                              <td className="py-3 px-4 text-[#635E59]">≥ 200</td>
+                              <td className="py-3 pl-4 text-right font-semibold text-[#8B4500]">
+                                {selectedBatch.crocin440nm}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
+                                Picrocrocin (Bitterness)
+                              </td>
+                              <td className="py-3 px-4 text-[#635E59]">257 nm UV-Vis</td>
+                              <td className="py-3 px-4 text-[#635E59]">≥ 70</td>
+                              <td className="py-3 pl-4 text-right font-semibold text-[#181615]">
+                                {selectedBatch.picrocrocin257nm}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
+                                Safranal (Volatile Aroma)
+                              </td>
+                              <td className="py-3 px-4 text-[#635E59]">330 nm UV-Vis</td>
+                              <td className="py-3 px-4 text-[#635E59]">20 – 50</td>
+                              <td className="py-3 pl-4 text-right font-semibold text-[#181615]">
+                                {selectedBatch.safranal330nm}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
+                                Moisture &amp; Volatile Matter
+                              </td>
+                              <td className="py-3 px-4 text-[#635E59]">ISO 3632 Gravimetric</td>
+                              <td className="py-3 px-4 text-[#635E59]">≤ 12.0%</td>
+                              <td className="py-3 pl-4 text-right font-semibold text-[#181615]">
+                                {selectedBatch.moisturePercent}%
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
+                                Floral Waste / Yellow Style
+                              </td>
+                              <td className="py-3 px-4 text-[#635E59]">Physical Gravimetric</td>
+                              <td className="py-3 px-4 text-[#635E59]">≤ 0.5%</td>
+                              <td className="py-3 pl-4 text-right font-semibold text-[#181615]">
+                                {selectedBatch.floralWastePercent}%
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#EAE0D2] text-xs">
+                        <div>
+                          <span className="text-[#635E59]">Quality Lead: </span>
+                          <span className="font-medium text-[#181615]">{selectedBatch.harvesterLead}</span>
+                        </div>
+                        <div>
+                          <span className="text-[#635E59]">Dehydration Protocol: </span>
+                          <span className="font-medium text-[#181615]">{selectedBatch.dryingProtocol}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </section>
           </>
         )}
@@ -716,9 +929,575 @@ export default function App() {
                   </p>
                 </div>
               </div>
+
+              {/* Explore Our Story Sub-Pages (Dropdown Pages) */}
+              <div className="pt-6 border-t border-[#EAE0D2]">
+                <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                  Deep Dive Into Orhues
+                </div>
+                <h3 className="font-display text-3xl font-semibold text-[#181615] mb-8">
+                  Explore Our Story Chapters
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] mb-2">
+                        CHAPTER 01 · BOTANY, CORM QUALITY &amp; CEA AGRONOMY
+                      </div>
+                      <h4 className="font-display text-2xl font-semibold text-[#181615] mb-2">
+                        Indoor Cultivation
+                      </h4>
+                      <p className="text-sm text-[#4A4540] leading-relaxed mb-6">
+                        Discover the botanical anatomy of <em>Crocus sativus</em>, how precision indoor aeroponics transforms cultivation, mother corm quality standards, and corm caliber sizing.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate('Indoor Cultivation')}
+                      className="w-full py-3 px-5 rounded-full bg-[#8B4500] hover:bg-[#6E3600] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Explore Indoor Cultivation</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] mb-2">
+                        CHAPTER 02 · PEOPLE &amp; MISSION
+                      </div>
+                      <h4 className="font-display text-2xl font-semibold text-[#181615] mb-2">
+                        About Us
+                      </h4>
+                      <p className="text-sm text-[#4A4540] leading-relaxed mb-6">
+                        Meet the Orhues leadership, multidisciplinary agronomy and engineering teams in Thrissur, our founding story, and what we do.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate('About Us')}
+                      className="w-full py-3 px-5 rounded-full bg-[#8B4500] hover:bg-[#6E3600] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Explore About Us</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </section>
           </>
         )}
+
+        {/* ================= PAGE: INDOOR CULTIVATION ================= */}
+        {activePage === 'Indoor Cultivation' && (
+          <>
+            {renderPageHeader(
+              'Indoor Cultivation',
+              'The Botany, Phytochemistry & Precision Cultivation of Crocus Sativus',
+              'Understand why saffron is revered as Red Gold, how each blossom forms its three crimson stigmas, mother corm quality & caliber sizing, and how Orhues cultivates heritage stock through indoor aeroponic systems.'
+            )}
+            <section className="py-16 max-w-[1280px] mx-auto px-6 space-y-16">
+              {/* Section 1: Botanical Anatomy & Triploid Biology */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10">
+                <div className="lg:col-span-6 space-y-5">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider">
+                    01 · Botanical Anatomy &amp; Heritage
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                    The Miracle of the Triploid Autumn Crocus
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    True saffron derives from <em>Crocus sativus L.</em>, an autumn-flowering perennial geophyte of the family <em>Iridaceae</em>. Because it is a sterile triploid plant (3n = 24 chromosomes), it produces no viable seeds—meaning every single saffron flower on earth must be propagated vegetatively from underground mother corms.
+                  </p>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    Each lilac-purple blossom opens at dawn to reveal three golden stamens and a single central pistil that divides into <strong>three vivid crimson stigma filaments</strong> (25–32 mm long). Only these three crimson stigmas contain the prized apocarotenoids—requiring <strong>150 to 170 hand-picked flowers</strong> to cure a single gram of dry Orhues saffron.
+                  </p>
+                  <div className="grid grid-cols-3 gap-4 pt-2">
+                    <div className="p-4 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2]">
+                      <div className="font-mono-tabular text-lg sm:text-xl font-semibold text-[#8B4500]">
+                        Crocin
+                      </div>
+                      <div className="text-xs text-[#635E59] mt-1">
+                        Water-soluble carotenoid delivering luminous golden-crimson color (440 nm)
+                      </div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2]">
+                      <div className="font-mono-tabular text-lg sm:text-xl font-semibold text-[#8B4500]">
+                        Picrocrocin
+                      </div>
+                      <div className="text-xs text-[#635E59] mt-1">
+                        Monoterpene glycoside responsible for saffron’s noble earthy bitterness (257 nm)
+                      </div>
+                    </div>
+                    <div className="p-4 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2]">
+                      <div className="font-mono-tabular text-lg sm:text-xl font-semibold text-[#8B4500]">
+                        Safranal
+                      </div>
+                      <div className="text-xs text-[#635E59] mt-1">
+                        Volatile essential oil formed during precision curing, creating honeyed aroma (330 nm)
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="lg:col-span-6">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-[#EAE0D2]">
+                    <ResilientImage
+                      src={BOTANICAL_IMAGE}
+                      alt="Macro close-up of Crocus sativus saffron blossoms and crimson stigmas"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 2: Saffron Cultivation Architecture (Traditional vs CEA Aeroponics) */}
+              <div className="space-y-8">
+                <div className="max-w-3xl">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                    02 · Saffron Cultivation Methodologies
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615] mb-3">
+                    How Saffron Is Cultivated: Highland Terraces vs. Indoor CEA Chambers
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    <em>Crocus sativus</em> follows an inverted phenological calendar: it aestivates (sleeps) during hot dry summers, wakes to flower in cool autumn mornings, and grows vegetative leaves and daughter corms through winter. Orhues supports both highland raised-bed growers and controlled-environment indoor cultivators.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="bg-white rounded-2xl border border-[#EAE0D2] p-8 space-y-4">
+                    <div className="text-xs font-mono-tabular text-[#8B4500] uppercase">
+                      METHOD A · CONTROLLED-ENVIRONMENT AEROPONICS (CEA)
+                    </div>
+                    <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                      Precision Vertical Indoor Cultivation
+                    </h3>
+                    <p className="text-sm text-[#4A4540] leading-relaxed">
+                      During the summer dormancy and autumn flowering phases, mother corms draw 100% of their energy from internal starch reserves rather than soil. By arranging Caliber 10/+ corms in perforated vertical trays inside thermally insulated rooms, we trigger dense, synchronized blooming anywhere in India.
+                    </p>
+                    <ul className="space-y-2.5 text-xs sm:text-sm text-[#4A4540] pt-2">
+                      <li>• <strong>Summer Floral Incubation (Jun–Aug):</strong> 25°C–27°C at 65% RH initiates floral meristem differentiation inside the dormant corm.</li>
+                      <li>• <strong>Autumn Anthesis Induction (Oct–Nov):</strong> Stepping down to 16°C day / 8°C night with 80% ultrasonic mist and targeted PAR light stimulates 2–3 blossoms per corm.</li>
+                      <li>• <strong>Zero Soil Contamination:</strong> Blossoms open in a cleanroom environment free of dust, unseasonal rain damage, or rodents.</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-white rounded-2xl border border-[#EAE0D2] p-8 space-y-4">
+                    <div className="text-xs font-mono-tabular text-[#8B4500] uppercase">
+                      METHOD B · RAISED-BED &amp; HYBRID SOIL MULTIPLICATION
+                    </div>
+                    <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                      Friable Loam &amp; Post-Harvest Corm Propagation
+                    </h3>
+                    <p className="text-sm text-[#4A4540] leading-relaxed">
+                      Following the November indoor flower harvest, mother corms are transplanted into well-drained friable sandy-loam beds (pH 6.5–7.5) or chilled nutrient media so their grass-like leaves can photosynthesize and form 4 to 7 new daughter corms per mother bulb.
+                    </p>
+                    <ul className="space-y-2.5 text-xs sm:text-sm text-[#4A4540] pt-2">
+                      <li>• <strong>Planting Depth &amp; Spacing:</strong> 12–15 cm deep on 20 cm raised ridges to prevent waterlogging and corm asphyxiation.</li>
+                      <li>• <strong>Organic Mineral Nutrition:</strong> Composted farmyard manure, wood ash potassium, and beneficial <em>Trichoderma viride</em> bio-shield.</li>
+                      <li>• <strong>Spring Tunic Curing (Apr–May):</strong> Foliage naturally senesces as soil warms; plump replacement corms are lifted, cleaned, and graded for the next cycle.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3 (Moved from Quality Checks): Saffron Corm Quality & Anatomical Inspection */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10">
+                <div className="lg:col-span-6 space-y-5">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider">
+                    03 · Saffron Corm Quality Standards
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                    What Defines a High-Yielding Mother Corm
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    In saffron cultivation, harvest success is determined months before blooming by the physiological health and starch density of the <em>Crocus sativus</em> corm. At Orhues, every bulb is individually hand-inspected across five strict anatomical criteria before approval.
+                  </p>
+                  <div className="space-y-3 text-xs sm:text-sm text-[#4A4540]">
+                    <div className="p-4 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2]">
+                      <strong className="text-[#181615] block mb-0.5">
+                        1. Intact Fibrous Brown Tunic Coat
+                      </strong>
+                      Protects the fleshy starch core from desiccation during summer incubation and shields against airborne fungal spores.
+                    </div>
+                    <div className="p-4 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2]">
+                      <strong className="text-[#181615] block mb-0.5">
+                        2. Dominant Apical Meristem Buds (1–3 Primary Shoots)
+                      </strong>
+                      Verified under stereomicroscopy during late July to confirm healthy floral primordia formation prior to dispatch.
+                    </div>
+                    <div className="p-4 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2]">
+                      <strong className="text-[#181615] block mb-0.5">
+                        3. Clean, Unscarred Basal Root Plate
+                      </strong>
+                      Must be completely free of dark sunken lesions, soft spots, mechanical cuts, or remnants of decayed mother plates.
+                    </div>
+                  </div>
+                </div>
+                <div className="lg:col-span-6">
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden border border-[#EAE0D2]">
+                    <ResilientImage
+                      src={CORMS_IMAGE}
+                      alt="Graded Caliber 10/+ Crocus sativus saffron mother corms"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 4 (Moved from Quality Checks): Saffron Corm Size & Caliber Grading Matrix */}
+              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10 space-y-6">
+                <div className="max-w-3xl">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                    04 · Corm Size &amp; Weight Classification
+                  </div>
+                  <h2 className="font-display text-3xl font-semibold text-[#181615] mb-2">
+                    Saffron Corm Size vs. First-Year Flowering Potential
+                  </h2>
+                  <p className="text-sm text-[#4A4540] leading-relaxed">
+                    Corm weight and equatorial diameter directly dictate whether a bulb will flower in its very first autumn or only produce vegetative leaves. Orhues precision-sieves all corms into four standardized calibers:
+                  </p>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left border-collapse">
+                    <thead>
+                      <tr className="border-b border-[#DFCBB2] text-xs uppercase tracking-wider text-[#635E59] bg-[#FCF9F4]">
+                        <th className="py-3.5 px-4 font-semibold">Corm Grade / Caliber</th>
+                        <th className="py-3.5 px-4 font-semibold">Equatorial Diameter</th>
+                        <th className="py-3.5 px-4 font-semibold">Individual Corm Weight</th>
+                        <th className="py-3.5 px-4 font-semibold">Year-1 Bloom Output</th>
+                        <th className="py-3.5 px-4 font-semibold">Recommended Application</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-xs sm:text-sm divide-y divide-[#EAE0D2] font-mono-tabular">
+                      <tr>
+                        <td className="py-4 px-4 font-sans font-semibold text-[#8B4500]">
+                          Caliber 10/+ (Jumbo Elite)
+                        </td>
+                        <td className="py-4 px-4 text-[#181615]">3.5 cm – 4.5+ cm</td>
+                        <td className="py-4 px-4 text-[#181615]">14.0 g – 22.0 g</td>
+                        <td className="py-4 px-4 font-semibold text-[#8B4500]">
+                          2.2 – 3.0 Flowers / Corm
+                        </td>
+                        <td className="py-4 px-4 font-sans text-[#4A4540]">
+                          Indoor CEA Aeroponic Trays &amp; Immediate Commercial Yield
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 px-4 font-sans font-semibold text-[#181615]">
+                          Caliber 9/10 (Commercial Grade A)
+                        </td>
+                        <td className="py-4 px-4 text-[#181615]">2.8 cm – 3.4 cm</td>
+                        <td className="py-4 px-4 text-[#181615]">10.0 g – 13.5 g</td>
+                        <td className="py-4 px-4 font-semibold text-[#181615]">
+                          1.2 – 1.8 Flowers / Corm
+                        </td>
+                        <td className="py-4 px-4 font-sans text-[#4A4540]">
+                          Multi-Year Raised-Bed Estates &amp; Hybrid Soil Plots
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 px-4 font-sans font-semibold text-[#181615]">
+                          Caliber 8/9 (Standard Nursery)
+                        </td>
+                        <td className="py-4 px-4 text-[#181615]">2.3 cm – 2.7 cm</td>
+                        <td className="py-4 px-4 text-[#181615]">8.0 g – 9.8 g</td>
+                        <td className="py-4 px-4 text-[#635E59]">
+                          0.4 – 0.8 Flowers / Corm
+                        </td>
+                        <td className="py-4 px-4 font-sans text-[#4A4540]">
+                          Field Bulking for Year-2 &amp; Year-3 Harvest Expansion
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-4 px-4 font-sans font-medium text-[#635E59]">
+                          Under Caliber 8 (Feeder Cormlets)
+                        </td>
+                        <td className="py-4 px-4 text-[#635E59]">&lt; 2.2 cm</td>
+                        <td className="py-4 px-4 text-[#635E59]">2.0 g – 7.5 g</td>
+                        <td className="py-4 px-4 text-[#635E59]">
+                          Non-Flowering in Year 1
+                        </td>
+                        <td className="py-4 px-4 font-sans text-[#635E59]">
+                          Never sold as flowering stock; retained in nursery beds to fatten
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Section 5: Interactive 4-Stage Cultivation Blueprint & Yield Calculator */}
+              <div className="pt-4">
+                <CultivationPlanner
+                  onAddCormsToBag={(product, variant, quantity) => {
+                    handleAddToCart(product, variant, quantity);
+                    setIsCartOpen(true);
+                  }}
+                />
+              </div>
+            </section>
+          </>
+        )}
+
+        {/* ================= PAGE: ABOUT US ================= */}
+        {activePage === 'About Us' && (
+          <>
+            {renderPageHeader(
+              'About Us',
+              'Our Story, Leadership, Multidisciplinary Team & What We Do at Orhues',
+              'Headquartered in Thrissur, Kerala, Orhues unites agricultural biotechnology, precision climate engineering, and luxury botanical craftsmanship.'
+            )}
+            <section className="py-16 max-w-[1280px] mx-auto px-6 space-y-16">
+              {/* Section 1: Our Story */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10">
+                <div className="lg:col-span-6 space-y-5">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider">
+                    01 · Our Story
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                    Pioneering Precision Saffron Agronomy in Kerala
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    Orhues began in Thrissur, Kerala with a bold scientific question: <em>Can the exact micro-climate of a 1,850-meter Himalayan saffron terrace be engineered inside a zero-pesticide indoor sanctuary in South India?</em>
+                  </p>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    After multi-cycle trials calibrating diurnal chiller curves, ultrasonic misting profiles, and custom photon spectra on high-caliber Kashmiri mother corms, our chambers achieved consistent Grade I harvests reaching 292 Crocin units. Today, Orhues serves both discerning culinary households and aspiring saffron entrepreneurs across India.
+                  </p>
+                </div>
+                <div className="lg:col-span-6">
+                  <div className="aspect-[16/10] rounded-2xl overflow-hidden border border-[#EAE0D2]">
+                    <ResilientImage
+                      src={INDOOR_TECH_IMAGE}
+                      alt="Orhues Controlled-Environment Saffron Facility in Thrissur, Kerala"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 2: What We Do */}
+              <div className="space-y-8">
+                <div className="max-w-3xl">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                    02 · What We Do
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615] mb-2">
+                    Four Integrated Pillars of the Orhues Ecosystem
+                  </h2>
+                  <p className="text-sm text-[#4A4540] leading-relaxed">
+                    We operate across the complete value chain of <em>Crocus sativus</em>—from mother corm genetics and turnkey chamber engineering to luxury consumer creations.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] mb-2">PILLAR 01</div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615] mb-2">
+                        Cleanroom Saffron Cultivation
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed mb-5">
+                        Year-round management of dormant and flowering <em>Crocus sativus</em> mother corms inside our sterile Thrissur vertical aeroponic chambers.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate('Technology')}
+                      className="text-xs font-bold uppercase tracking-wider text-[#8B4500] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>View Technology</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] mb-2">PILLAR 02</div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615] mb-2">
+                        Luxury Saffron Apothecary
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed mb-5">
+                        Direct-to-consumer single-estate Saffron Threads, Raw Saffron Infused Honey, Luxury Saffron Tea, and certified Caliber 10/+ mother corms.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate('Shop')}
+                      className="text-xs font-bold uppercase tracking-wider text-[#8B4500] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Explore Shop</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] mb-2">PILLAR 03</div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615] mb-2">
+                        Turnkey CEA Infrastructure
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed mb-5">
+                        Custom design, PUF thermal insulation, HVAC chiller integration, and IoT automation for 100 to 1,000+ sq. ft. commercial grow rooms.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate('Infrastructure')}
+                      className="text-xs font-bold uppercase tracking-wider text-[#8B4500] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>View Infrastructure</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] mb-2">PILLAR 04</div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615] mb-2">
+                        Grower Training Academy
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed mb-5">
+                        Hands-on workshops and 12-month agronomic mentorship equipping farmers, agri-entrepreneurs, and researchers across India.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate('Training')}
+                      className="text-xs font-bold uppercase tracking-wider text-[#8B4500] hover:underline inline-flex items-center gap-1 cursor-pointer"
+                    >
+                      <span>Explore Training</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3: Leadership */}
+              <div className="space-y-8">
+                <div className="max-w-3xl">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                    03 · Leadership
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615] mb-2">
+                    Guided by Agronomy, Engineering &amp; Quality Stewardship
+                  </h2>
+                  <p className="text-sm text-[#4A4540] leading-relaxed">
+                    Our leadership team in Thrissur brings together decades of expertise in controlled-environment horticulture, HVAC thermal systems, and analytical food chemistry.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
+                  {[
+                    {
+                      role: 'FOUNDER & MANAGING DIRECTOR',
+                      name: 'Aravind Menon',
+                      focus: 'Vision, Turnkey CEA Strategy & Grower Partnerships',
+                      bio: 'Spearheaded Orhues’s indoor saffron initiative in Thrissur, bridging precision vertical farming architecture with direct-to-consumer luxury spice traceability across India.'
+                    },
+                    {
+                      role: 'DIRECTOR OF AGRONOMY & PHYTOPATHOLOGY',
+                      name: 'Dr. Meera Krishnan, Ph.D.',
+                      focus: 'Corm Vernalization, Floral Meristem Biology & Training',
+                      bio: 'Leads mother corm caliber grading, dormancy incubation protocols, and post-harvest daughter corm multiplication trials for both aeroponic and raised-bed growers.'
+                    },
+                    {
+                      role: 'HEAD OF CEA SYSTEMS & QUALITY ASSURANCE',
+                      name: 'Siddharth Varma',
+                      focus: 'IoT Micro-Climate Engineering & ISO 3632-2 Lab Assays',
+                      bio: 'Architects Orhues’s automated HVAC chiller and ultrasonic misting loops while overseeing UV-Vis spectrophotometric testing of every harvest lot.'
+                    }
+                  ].map((leader, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-white rounded-2xl border border-[#EAE0D2] p-7 space-y-3"
+                    >
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold">
+                        {leader.role}
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        {leader.name}
+                      </h3>
+                      <div className="text-xs font-medium text-[#635E59] pb-3 border-b border-[#EAE0D2]">
+                        {leader.focus}
+                      </div>
+                      <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed">
+                        {leader.bio}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section 4: Our Team */}
+              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10 space-y-8">
+                <div className="max-w-3xl">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                    04 · Our Team
+                  </div>
+                  <h2 className="font-display text-3xl font-semibold text-[#181615] mb-2">
+                    The Specialist Divisions Behind Every Bloom
+                  </h2>
+                  <p className="text-sm text-[#4A4540] leading-relaxed">
+                    Every gram of Orhues saffron and every commissioned grow room is supported by four dedicated specialist teams working in concert at our Thrissur facility.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="p-5 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] space-y-2">
+                    <div className="font-mono-tabular text-xs font-semibold text-[#8B4500]">
+                      DIVISION 01
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-[#181615]">
+                      Corm Nursery &amp; Pathology Team
+                    </h3>
+                    <p className="text-xs text-[#4A4540] leading-relaxed">
+                      Inspects, grades, and bio-shields thousands of Caliber 10/+ mother corms, monitoring apical shoot development through summer dormancy.
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] space-y-2">
+                    <div className="font-mono-tabular text-xs font-semibold text-[#8B4500]">
+                      DIVISION 02
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-[#181615]">
+                      Climate &amp; IoT Engineering Team
+                    </h3>
+                    <p className="text-xs text-[#4A4540] leading-relaxed">
+                      Fabricates insulated PUF chambers, calibrates redundant chillers, and monitors 24/7 sensor telemetry for Orhues and partner farms.
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] space-y-2">
+                    <div className="font-mono-tabular text-xs font-semibold text-[#8B4500]">
+                      DIVISION 03
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-[#181615]">
+                      Cleanroom Harvest &amp; Assay Team
+                    </h3>
+                    <p className="text-xs text-[#4A4540] leading-relaxed">
+                      Performs dawn flower picking, surgical tripartite stigma separation, silk-sieve dehydration, and ISO 3632 UV-Vis batch certification.
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] space-y-2">
+                    <div className="font-mono-tabular text-xs font-semibold text-[#8B4500]">
+                      DIVISION 04
+                    </div>
+                    <h3 className="font-display text-xl font-semibold text-[#181615]">
+                      Grower Academy &amp; Apothecary Concierge
+                    </h3>
+                    <p className="text-xs text-[#4A4540] leading-relaxed">
+                      Conducts hands-on workshops in Thrissur, guides trainees through their first harvest, and fulfills nationwide apothecary dispatches.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+
 
         {/* ================= PAGE: OUR SERVICES ================= */}
         {activePage === 'Our Services' && (
@@ -823,6 +1602,67 @@ export default function App() {
               'Master the science and economics of indoor aeroponic and raised-bed saffron cultivation through hands-on chamber immersion with our lead agronomists.'
             )}
             <section className="py-16 max-w-[1280px] mx-auto px-6 space-y-14">
+              {/* Single Section: Training at a Glance */}
+              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-8 sm:p-10 space-y-6">
+                <div className="space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                    <div>
+                      <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#181615]">
+                        Training at a Glance
+                      </h3>
+                    </div>
+                    <span className="text-xs font-mono-tabular text-[#635E59]">
+                      100% Practical Cleanroom &amp; Agronomy Curriculum
+                    </span>
+                  </div>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed max-w-3xl">
+                    Learn to grow saffron indoors with the team behind Orhues. Our practical training covers everything from understanding the crop and setting up a controlled grow room to automation, harvest and the business side — so you leave ready to plan your own cultivation setup.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[
+                      {
+                        label: 'TRAINING FORMAT',
+                        value: 'Hands-On Chamber Immersion',
+                        detail: 'Live practice inside active aeroponic saffron grow rooms in Thrissur.'
+                      },
+                      {
+                        label: 'CORE CURRICULUM',
+                        value: 'Crop, Room Setup & Automation',
+                        detail: 'Corm biology, PUF insulation, HVAC chillers, VPD/CO₂ sensors & 365-day scheduling.'
+                      },
+                      {
+                        label: 'HARVEST & BUSINESS',
+                        value: 'ISO 3632 Grading & ROI Model',
+                        detail: 'Dawn stigma separation, precision dehydration, CAPEX/OPEX & market linkage.'
+                      },
+                      {
+                        label: 'POST-TRAINING SUPPORT',
+                        value: 'Certificate & Grower Mentorship',
+                        detail: 'Official Orhues certificate, stage parameter recipes & mother corm access.'
+                      }
+                    ].map((glance, idx) => (
+                      <div
+                        key={idx}
+                        className="p-5 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] space-y-1.5"
+                      >
+                        <div className="text-[10px] font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                          {glance.label}
+                        </div>
+                        <div className="font-display text-xl font-semibold text-[#181615]">
+                          {glance.value}
+                        </div>
+                        <p className="text-xs text-[#4A4540] leading-relaxed">
+                          {glance.detail}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
                 {[
                   {
@@ -899,12 +1739,308 @@ export default function App() {
                 ))}
               </div>
 
-              <CultivationPlanner
-                onAddCormsToBag={(product, variant, quantity) => {
-                  handleAddToCart(product, variant, quantity);
-                  setIsCartOpen(true);
-                }}
-              />
+              {/* Section: Upcoming Batches */}
+              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-7 sm:p-10 space-y-8">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                  <div className="max-w-2xl space-y-2">
+                    <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider">
+                      Orhues Academy Schedule · Thrissur, Kerala
+                    </div>
+                    <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                      Upcoming Batches
+                    </h2>
+                    <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                      Small-cohort, hands-on indoor saffron cultivation sessions conducted inside our active Controlled-Environment Agriculture (CEA) chambers in Thrissur.
+                    </p>
+                  </div>
+                  <a
+                    href="https://wa.me/918089964529?text=Hello%20Orhues%2C%20I%20would%20like%20to%20check%20seat%20availability%20for%20your%20Upcoming%20Training%20Batches."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 rounded-full border border-[#8B4500] text-[#8B4500] hover:bg-[#FCF8F2] text-xs font-bold uppercase tracking-wider transition-colors self-start md:self-auto"
+                  >
+                    Inquire via WhatsApp →
+                  </a>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    {
+                      batchCode: 'BATCH ORH-T11 · THRISSUR',
+                      dates: '15 – 17 November 2026',
+                      program: '3-Day Commercial CEA Residency',
+                      timing: '9:00 AM – 5:30 PM IST',
+                      seats: '4 Seats Remaining (Max 12)',
+                      status: 'Registration Open'
+                    },
+                    {
+                      batchCode: 'BATCH ORH-T12 · THRISSUR',
+                      dates: '29 November 2026',
+                      program: '1-Day Indoor Aeroponic Masterclass',
+                      timing: '9:00 AM – 5:30 PM IST',
+                      seats: '6 Seats Remaining (Max 15)',
+                      status: 'Registration Open'
+                    },
+                    {
+                      batchCode: 'BATCH ORH-T13 · THRISSUR',
+                      dates: '12 – 14 December 2026',
+                      program: '3-Day Commercial CEA Residency',
+                      timing: '9:00 AM – 5:30 PM IST',
+                      seats: 'Early Bird Open (Max 12)',
+                      status: 'Filling Fast'
+                    }
+                  ].map((batch, idx) => (
+                    <div
+                      key={idx}
+                      className="p-6 rounded-2xl bg-[#FCF9F4] border border-[#EAE0D2] flex flex-col justify-between space-y-5"
+                    >
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-[11px] font-mono-tabular font-semibold text-[#8B4500]">
+                            {batch.batchCode}
+                          </span>
+                          <span className="text-[11px] font-semibold text-[#2E6B3E] bg-[#E9F5EC] px-2.5 py-0.5 rounded-full">
+                            {batch.status}
+                          </span>
+                        </div>
+                        <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                          {batch.dates}
+                        </h3>
+                        <div className="text-sm font-semibold text-[#4A4540]">
+                          {batch.program}
+                        </div>
+                        <div className="text-xs text-[#635E59] space-y-1 pt-2 border-t border-[#EAE0D2]">
+                          <div>Schedule: {batch.timing}</div>
+                          <div>Availability: {batch.seats}</div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setInquiryTopic(`Batch Registration: ${batch.batchCode} (${batch.dates})`);
+                          handleNavigate('Contact');
+                        }}
+                        className="w-full py-3 px-4 rounded-full bg-[#8B4500] hover:bg-[#6E3600] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                      >
+                        Book This Batch
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Section: Previous Batches (Moments From Our Training Photos + Embedded Student Testimonial Videos) */}
+              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-7 sm:p-10 space-y-12">
+                <div className="max-w-3xl space-y-2">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider">
+                    Alumni &amp; Past Cohorts · Thrissur Facility
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                    Previous Batches
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    Explore moments from our completed indoor saffron cultivation cohorts in Thrissur and watch direct video testimonials from trainees who have launched their own controlled-environment saffron setups.
+                  </p>
+                </div>
+
+                {/* Sub-section 1: Moments From Our Training (Photos) */}
+                <div className="space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        Training Photo Archive
+                      </div>
+                      <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#181615]">
+                        Moments From Our Training
+                      </h3>
+                    </div>
+                    <span className="text-xs text-[#635E59]">
+                      Batches ORH-T01 through ORH-T10 · Thrissur, Kerala
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                      {
+                        img: TRAINING_BG_IMAGE,
+                        batch: 'BATCH ORH-T10 · OCT 2026',
+                        title: 'Cleanroom Walkthrough & Rack Inspection',
+                        caption: 'Trainees examining multi-tier vertical airflow and misting nozzles inside Chamber A.'
+                      },
+                      {
+                        img: CORMS_IMAGE,
+                        batch: 'BATCH ORH-T09 · SEP 2026',
+                        title: 'Mother Corm Caliber Grading Workshop',
+                        caption: 'Hands-on sorting of Caliber 10/+ dormant corms and apical shoot inspection.'
+                      },
+                      {
+                        img: TECH_BG_IMAGE,
+                        batch: 'BATCH ORH-T08 · AUG 2026',
+                        title: 'AI Parameter & 365-Day Schedule Setup',
+                        caption: 'Configuring flowering and corm multiplication stage recipes on the Orhues controller.'
+                      },
+                      {
+                        img: BOTANICAL_IMAGE,
+                        batch: 'BATCH ORH-T07 · JUL 2026',
+                        title: 'Dawn Anthesis & Stigma Stripping Practice',
+                        caption: 'Practicing hygienic Super Negin crimson filament separation and silk-sieve drying.'
+                      }
+                    ].map((moment, idx) => (
+                      <figure
+                        key={idx}
+                        className="rounded-2xl bg-[#FCF9F4] border border-[#EAE0D2] overflow-hidden flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="aspect-[4/3] w-full bg-[#F4ECE1] overflow-hidden">
+                            <ResilientImage
+                              src={moment.img}
+                              alt={moment.title}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <figcaption className="p-5 space-y-1.5">
+                            <div className="text-[10px] font-mono-tabular text-[#8B4500] font-semibold">
+                              {moment.batch}
+                            </div>
+                            <h4 className="font-display text-xl font-semibold text-[#181615]">
+                              {moment.title}
+                            </h4>
+                            <p className="text-xs text-[#4A4540] leading-relaxed">
+                              {moment.caption}
+                            </p>
+                          </figcaption>
+                        </div>
+                      </figure>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sub-section 2: Embedded Student Testimonial Videos (Native HTML5 Video — Not YouTube) */}
+                <div className="pt-8 border-t border-[#EAE0D2] space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                    <div>
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        Direct Trainee Feedback
+                      </div>
+                      <h3 className="font-display text-2xl sm:text-3xl font-semibold text-[#181615]">
+                        Student Testimonial Videos
+                      </h3>
+                    </div>
+                    <span className="text-xs text-[#635E59]">
+                      Native Embedded Video Testimonials
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[
+                      {
+                        student: 'Arun Krishnan',
+                        location: 'Kochi, Kerala · Batch ORH-T09',
+                        title: 'Converted a 180 sq. ft. Room into an Indoor Saffron Unit',
+                        quote: '“The 3-day residency in Thrissur gave me the exact chiller, humidity, and corm grading blueprint I needed to start my own chamber without trial-and-error.”',
+                        poster: TRAINING_BG_IMAGE,
+                        videoSrc: '/videos/student-testimonial-1.mp4'
+                      },
+                      {
+                        student: 'Dr. Meera Nandakumar',
+                        location: 'Coimbatore, Tamil Nadu · Batch ORH-T08',
+                        title: 'Precision Automation & Stage-Specific Recipes',
+                        quote: '“Seeing the live flowering chamber and learning how to program separate parameters for flowering vs. corm multiplication gave our research team complete clarity.”',
+                        poster: INDOOR_TECH_IMAGE,
+                        videoSrc: '/videos/student-testimonial-2.mp4'
+                      },
+                      {
+                        student: 'Faisal Rahman',
+                        location: 'Kozhikode, Kerala · Batch ORH-T10',
+                        title: 'From Zero Agriculture Background to Commercial Setup',
+                        quote: '“Orhues covered the entire business side—from room insulation and mother corm sourcing to ISO 3632 drying and market pricing.”',
+                        poster: HERO_IMAGE,
+                        videoSrc: '/videos/student-testimonial-3.mp4'
+                      }
+                    ].map((vid, idx) => (
+                      <div
+                        key={idx}
+                        className="rounded-2xl bg-[#FCF9F4] border border-[#EAE0D2] overflow-hidden flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="aspect-video w-full bg-[#181615] relative overflow-hidden">
+                            <video
+                              controls
+                              playsInline
+                              preload="metadata"
+                              poster={vid.poster}
+                              className="w-full h-full object-cover"
+                            >
+                              <source src={vid.videoSrc} type="video/mp4" />
+                              Your browser does not support native HTML5 video playback.
+                            </video>
+                          </div>
+                          <div className="p-6 space-y-2.5">
+                            <div className="text-[11px] font-mono-tabular text-[#8B4500] font-semibold">
+                              {vid.location}
+                            </div>
+                            <h4 className="font-display text-xl font-semibold text-[#181615]">
+                              {vid.title}
+                            </h4>
+                            <p className="text-xs sm:text-sm text-[#4A4540] italic leading-relaxed">
+                              {vid.quote}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="px-6 pb-5 pt-3 border-t border-[#EAE0D2] flex items-center justify-between text-xs">
+                          <span className="font-semibold text-[#181615]">{vid.student}</span>
+                          <span className="text-[#8B4500] font-mono-tabular">Verified Trainee</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Section: Certificate — Earn Your Training Certificate */}
+              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-7 sm:p-10">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                  <div className="lg:col-span-6 space-y-4">
+                    <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider">
+                      Certificate
+                    </div>
+                    <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                      Earn Your Training Certificate
+                    </h2>
+                    <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                      Every participant who completes our hands-on training in Thrissur receives an official <strong>Orhues Indoor Saffron Cultivation Certificate</strong>—verifying practical competency in Controlled-Environment Agriculture (CEA) room setup, stage-specific parameter control, harvest handling, and commercial crop planning.
+                    </p>
+                    <ul className="space-y-2 text-xs sm:text-sm text-[#4A4540] pt-1">
+                      <li>• Signed by Orhues Lead Agronomists &amp; CEA Engineering Division</li>
+                      <li>• Includes lifetime access to updated cultivation parameter recipes</li>
+                      <li>• Priority eligibility for certified Caliber 10/+ mother corm allocation</li>
+                    </ul>
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setInquiryTopic('Certified Indoor Saffron Training Enrollment');
+                          handleNavigate('Contact');
+                        }}
+                        className="px-7 py-3.5 rounded-full bg-[#8B4500] hover:bg-[#6E3600] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                      >
+                        Enroll to Earn Your Certificate →
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-6">
+                    <div className="aspect-[16/10] w-full rounded-2xl overflow-hidden border border-[#EAE0D2] bg-[#F4ECE1]">
+                      <ResilientImage
+                        src={TRAINING_BG_IMAGE}
+                        alt="Earn Your Orhues Indoor Saffron Cultivation Training Certificate"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </section>
           </>
         )}
@@ -1041,168 +2177,623 @@ export default function App() {
           <>
             {renderPageHeader(
               'Technology',
-              'Controlled-Environment Agriculture & ISO 3632 Spectrophotometry',
-              'Explore how Orhues combines IoT micro-climate engineering, photonics, and UV-Vis chemical assay testing to produce world-leading saffron in Kerala.'
+              'AI-assisted precision cultivation',
+              'Control the environment. Monitor every parameter. Automate cultivation. Track every stage. A tailor-made AI-assisted control and monitoring system designed specifically for precision indoor saffron cultivation.'
             )}
-            <section className="py-16 max-w-[1280px] mx-auto px-6 space-y-16">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2]">
-                  <Cpu className="w-6 h-6 text-[#8B4500] mb-3" />
-                  <h3 className="font-display text-2xl font-semibold text-[#181615] mb-2">
-                    Thermoperiodic Diurnal Cycling
-                  </h3>
-                  <p className="text-sm text-[#4A4540] leading-relaxed">
-                    <em>Crocus sativus</em> anthesis is triggered by a precise differential between 16°C daytime warmth and 8°C night cooling. Our PLC controllers automate this transition smoothly to induce synchronized morning blooming.
+
+            <section className="py-16 max-w-[1280px] mx-auto px-6 space-y-20">
+              {/* Top Quick Action Bar */}
+              <div className="flex flex-wrap items-center justify-between gap-4 bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:px-8">
+                <div>
+                  <p className="font-display text-2xl font-semibold text-[#181615] mt-0.5">
+                    Purpose-Built Hardware, Sensor Telemetry &amp; 365-Day Crop Automation
                   </p>
                 </div>
-                <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2]">
-                  <Sprout className="w-6 h-6 text-[#8B4500] mb-3" />
-                  <h3 className="font-display text-2xl font-semibold text-[#181615] mb-2">
-                    Targeted Photon Spectrum (PAR)
-                  </h3>
-                  <p className="text-sm text-[#4A4540] leading-relaxed">
-                    Custom 450nm blue and 660nm deep-red LED arrays stimulate carotenoid biosynthesis inside the developing stigma, boosting crocin and safranal concentrations above traditional sun-exposed crops.
-                  </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const el = document.getElementById('tech-requirement-form');
+                      if (el) {
+                        el.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
+                    className="px-6 py-3.5 rounded-full bg-[#8B4500] hover:bg-[#6E3600] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                  >
+                    Talk to Us About Your Cultivation Requirement →
+                  </button>
+                  <a
+                    href="https://wa.me/918089964529?text=Hello%20Orhues%2C%20I%20would%20like%20to%20discuss%20our%20indoor%20saffron%20cultivation%20technology%20requirements."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3.5 rounded-full border border-[#8B4500] text-[#8B4500] hover:bg-[#FCF8F2] text-xs font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-2"
+                  >
+                    <span>WhatsApp Us</span>
+                  </a>
                 </div>
-                <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2]">
-                  <FlaskConical className="w-6 h-6 text-[#8B4500] mb-3" />
-                  <h3 className="font-display text-2xl font-semibold text-[#181615] mb-2">
-                    UV-Vis Batch Assay Lab
-                  </h3>
-                  <p className="text-sm text-[#4A4540] leading-relaxed">
-                    Every harvest lot is analyzed at 440nm (Crocin), 257nm (Picrocrocin), and 330nm (Safranal) per ISO 3632-2 protocol to guarantee Category I pharmaceutical and culinary grade.
+              </div>
+
+              {/* Section: Saffron Indoor Cultivation Requirements */}
+              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10 space-y-8">
+                <div className="max-w-3xl">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                    Environmental &amp; Facility Prerequisites
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615] mb-3">
+                    Saffron Indoor Cultivation Requirements
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    Successful indoor <em>Crocus sativus</em> cultivation requires a tightly sealed, hygienic micro-climate where every environmental variable can be independently controlled across both the flowering and corm multiplication stages.
                   </p>
                 </div>
               </div>
 
-              {/* ISO 3632 Batch Inspector */}
-              <div className="bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-                  <div className="lg:col-span-5">
-                    <div className="text-xs text-[#8B4500] font-semibold uppercase mb-2">
-                      Live Laboratory Verification
-                    </div>
-                    <h2 className="font-display text-3xl font-semibold text-[#181615] mb-3">
-                      ISO 3632-2 Batch Assay Inspector
-                    </h2>
-                    <p className="text-sm text-[#4A4540] leading-relaxed mb-6">
-                      Select an active Orhues batch below to inspect its spectrophotometric absorbance readings against international Grade I thresholds.
-                    </p>
+              {/* Visual Gallery / Placeholder Images Section (Easy to replace later) */}
+              <div className="space-y-8">
+                <div className="max-w-3xl">
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615] mb-2">
+                    Inside the Orhues Precision Cultivation Environment
+                  </h2>
+                  <p className="text-sm text-[#4A4540] leading-relaxed">
+                    Visual overview of our climate-controlled vertical racks, IoT sensor nodes, flowering trays, and root-zone corm multiplication setups.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[
+                    {
+                      img: TECH_BG_IMAGE,
+                      tag: 'IMAGE SLOT 01 · AI CONTROLLER & SENSORS',
+                      title: 'Centralized Climate & VPD Monitoring Node',
+                      caption: 'Real-time temperature, humidity, CO₂, and light spectrum telemetry inside the grow room.'
+                    },
+                    {
+                      img: INDOOR_TECH_IMAGE,
+                      tag: 'IMAGE SLOT 02 · VERTICAL AEROPONIC RACKS',
+                      title: 'Multi-Tier Indoor Saffron Flowering Chamber',
+                      caption: 'Perforated food-grade vertical trays engineered for laminar airflow and uniform mist distribution.'
+                    },
+                    {
+                      img: BOTANICAL_IMAGE,
+                      tag: 'IMAGE SLOT 03 · FLOWERING STAGE',
+                      title: 'Synchronized Dawn Anthesis Induction',
+                      caption: 'Precision 16°C day / 8°C night diurnal cycling triggering high-crocin crimson stigmas.'
+                    },
+                    {
+                      img: CORMS_IMAGE,
+                      tag: 'IMAGE SLOT 04 · CORM MULTIPLICATION',
+                      title: 'Root-Zone pH & EC Corm Bulking Protocol',
+                      caption: 'Separate stage parameters tuned for vigorous daughter corm division and starch accumulation.'
+                    }
+                  ].map((slot, idx) => (
+                    <figure
+                      key={idx}
+                      className="bg-white rounded-2xl border border-[#EAE0D2] overflow-hidden flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="aspect-[4/3] w-full bg-[#F4ECE1] overflow-hidden">
+                          <ResilientImage
+                            src={slot.img}
+                            alt={slot.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <figcaption className="p-5 space-y-1.5">
+                          <div className="text-[10px] font-mono-tabular text-[#8B4500] font-semibold">
+                            {slot.tag}
+                          </div>
+                          <h3 className="font-display text-xl font-semibold text-[#181615]">
+                            {slot.title}
+                          </h3>
+                          <p className="text-xs text-[#4A4540] leading-relaxed">
+                            {slot.caption}
+                          </p>
+                        </figcaption>
+                      </div>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3 x 4 Card Grid (12 Cards Total) */}
+              <div className="space-y-8">
+                <div className="max-w-3xl">
+                  <div className="text-xs text-[#8B4500] font-semibold uppercase tracking-wider mb-2">
+                    Integrated System Architecture
+                  </div>
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                    12 Core Capabilities of the Orhues Cultivation OS
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* Card 1: Our Technology */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
                     <div className="space-y-2.5">
-                      {LAB_BATCHES.map((batch) => {
-                        const isSelected = batch.lotId === selectedBatch.lotId;
-                        return (
-                          <button
-                            key={batch.lotId}
-                            type="button"
-                            onClick={() => setSelectedLotId(batch.lotId)}
-                            className={`w-full p-4 rounded-xl border text-left transition-colors flex items-center justify-between cursor-pointer ${
-                              isSelected
-                                ? 'bg-[#8B4500] text-white border-[#8B4500]'
-                                : 'bg-[#FCF9F4] text-[#181615] border-[#EAE0D2] hover:border-[#8B4500]'
-                            }`}
-                          >
-                            <div>
-                              <div className="font-mono-tabular text-xs font-semibold">
-                                {batch.lotId} · {batch.cultivar}
-                              </div>
-                              <div
-                                className={`text-xs mt-0.5 ${
-                                  isSelected ? 'text-stone-100' : 'text-[#635E59]'
-                                }`}
-                              >
-                                {batch.region}
-                              </div>
-                            </div>
-                            <span className="font-mono-tabular text-xs font-medium shrink-0">
-                              {batch.crocin440nm} Crocin
-                            </span>
-                          </button>
-                        );
-                      })}
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        01 · Our Technology
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Purpose-Built for Saffron.
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Our technology combines environmental monitoring, automated control, scheduling and data tracking into one integrated cultivation system.
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Unified Hardware + Cloud Telemetry
                     </div>
                   </div>
 
-                  <div className="lg:col-span-7 bg-[#FCF9F4] rounded-2xl border border-[#EAE0D2] p-6 sm:p-8">
-                    <div className="flex flex-wrap items-center justify-between gap-4 pb-4 mb-5 border-b border-[#EAE0D2]">
-                      <div>
-                        <div className="text-xs text-[#635E59] font-mono-tabular">
-                          CERTIFICATE OF ANALYSIS · {selectedBatch.lotId}
+                  {/* Card 2: Resource Management */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        02 · Resource Management
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Grow Better. Use Resources Better.
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Precision control helps manage energy, water, environmental conditions and operating time according to crop requirements.
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Optimized Power, Water &amp; HVAC Runtime
+                    </div>
+                  </div>
+
+                  {/* Card 3: Data Driven Agriculture */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        03 · Data-Driven Agriculture — Trace Back to Source
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Every Crop Has a Data Trail
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Capture cultivation data throughout the production cycle — creating a traceable record from environmental conditions to crop outcome.
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      End-to-End Batch Provenance
+                    </div>
+                  </div>
+
+                  {/* Card 4: Traceability / Crop History */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        04 · Traceability / Crop History
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        From Cultivation to Crop History
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Maintain a digital history of cultivation conditions, events, interventions and outcomes — giving you a clearer picture of how each crop was produced.
+                      </p>
+                      <p className="text-xs text-[#635E59] leading-relaxed">
+                        Especially valuable for commercial growers, hospitals/research facilities, or regulated and high-value agriculture.
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Audit-Ready Digital Crop Ledger
+                    </div>
+                  </div>
+
+                  {/* Card 5: Categories We Serve */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        05 · Categories We Serve
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Built for Different Cultivation Needs
+                      </h3>
+                      <ul className="space-y-1.5 text-xs sm:text-sm text-[#4A4540] pt-1">
+                        <li>• Commercial Saffron Growers</li>
+                        <li>• Indoor Farms</li>
+                        <li>• Research &amp; Experimental Cultivation</li>
+                        <li>• Controlled Environment Agriculture</li>
+                        <li>• Agricultural Institutions</li>
+                      </ul>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Scalable from Pilot Rooms to Agro-Parks
+                    </div>
+                  </div>
+
+                  {/* Card 6: Set the Parameters */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        06 · Set the Parameters
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Stage-Specific Parameter Recipes
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        We set parameters separately for each distinct biological stage:
+                      </p>
+                      <div className="space-y-2 pt-1">
+                        <div className="p-3 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] text-xs">
+                          <strong className="text-[#8B4500] block">1. Saffron Flowering Stage</strong>
+                          Precision aeroponic chamber temp, RH%, VPD, CO₂ &amp; photon recipes for peak bloom induction.
+                        </div>
+                        <div className="p-3 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] text-xs">
+                          <strong className="text-[#8B4500] block">2. Saffron Corm Multiplication Stage</strong>
+                          Separate root-zone moisture, EC, pH &amp; winter thermal targets for daughter corm division.
+                        </div>
+                      </div>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Dual-Phase Phenology Profiles
+                    </div>
+                  </div>
+
+                  {/* Card 7: Monitoring */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        07 · Monitoring
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Know What Is Happening — In Real Time
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Monitor critical cultivation parameters continuously from a centralized interface.
+                      </p>
+                      <div className="p-3 rounded-xl bg-[#FCF9F4] border border-[#EAE0D2] text-xs font-mono-tabular text-[#8B4500] leading-relaxed">
+                        Temperature · Humidity · CO₂ · Light · VPD · Soil/Root Zone · pH · EC
+                      </div>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      24/7 Centralized Sensor Dashboard
+                    </div>
+                  </div>
+
+                  {/* Card 8: Automated Control */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        08 · Automated Control
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        From Monitoring to Action
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        The system doesn&apos;t just tell you what is happening. It can automatically respond to defined conditions and control connected equipment.
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Closed-Loop Chiller, Mist &amp; LED Actuation
+                    </div>
+                  </div>
+
+                  {/* Card 9: Smart Scheduling */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        09 · Smart Scheduling
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Plan the Crop. Automate the Process.
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Create cultivation schedules up to 365 days, save multiple schedules and run them according to your production requirements.
+                      </p>
+                      <ul className="space-y-1 text-xs text-[#635E59]">
+                        <li>• Schedule up to 365 days in advance</li>
+                        <li>• Create, save &amp; run multiple schedules</li>
+                      </ul>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      365-Day Multi-Recipe Sequencer
+                    </div>
+                  </div>
+
+                  {/* Card 10: Alert and Notifications */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        10 · Alert and Notifications
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Know Before It Becomes a Problem
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Receive alerts when important cultivation conditions move outside defined limits or when system events require attention.
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Instant Threshold &amp; Equipment Alerts
+                    </div>
+                  </div>
+
+                  {/* Card 11: Result */}
+                  <div className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4">
+                    <div className="space-y-2.5">
+                      <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold uppercase">
+                        11 · Result
+                      </div>
+                      <h3 className="font-display text-2xl font-semibold text-[#181615]">
+                        Designed for Consistency
+                      </h3>
+                      <p className="text-sm text-[#4A4540] leading-relaxed">
+                        Our system is designed to maintain precise cultivation conditions, reduce environmental variability and help growers achieve more consistent results.
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-[#F4ECE1] text-[11px] font-mono-tabular text-[#635E59]">
+                      Repeatable Grade I Harvest Outcomes
+                    </div>
+                  </div>
+
+                  {/* Card 12: Empty Card */}
+                  <div
+                    className="p-7 rounded-2xl bg-[#FCF9F4] border border-dashed border-[#DFCBB2] min-h-[220px] flex flex-col justify-between"
+                    aria-label="Reserved slot 12"
+                  >
+                    <div className="text-xs font-mono-tabular text-[#C29B6B] font-semibold uppercase">
+                      12 ·
+                    </div>
+                    <div />
+                  </div>
+                </div>
+              </div>
+
+              {/* 4. Section: How to Adapt Our Technology for Your Cultivation Requirement */}
+              <div className="space-y-8">
+                <div className="max-w-3xl">
+                  <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615] mb-3">
+                    How to Adapt Our Technology for Your Cultivation Requirement
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                    Whether you are converting a spare room into a 100 sq. ft. pilot unit, retrofitting an existing cold-storage facility, or building a multi-room commercial saffron farm, our modular control system adapts seamlessly to your layout.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[
+                    {
+                      step: 'STEP 01 · SITE & ROOM AUDIT',
+                      title: 'Assess Your Space & Scale',
+                      desc: 'Share your room dimensions, ambient climate zone, and target corm capacity. We calculate thermal loads, rack geometry, and sensor placement.'
+                    },
+                    {
+                      step: 'STEP 02 · HARDWARE & SENSOR MAPPING',
+                      title: 'Configure Nodes & Actuators',
+                      desc: 'We match our AI controller relays to your chillers, humidifiers, CO₂ valves, LED drivers, and root-zone pH/EC probes—for new or existing equipment.'
+                    },
+                    {
+                      step: 'STEP 03 · STAGE RECIPE PROGRAMMING',
+                      title: 'Load Flowering & Corm Profiles',
+                      desc: 'We pre-load separate parameter profiles for the Saffron Flowering Stage and the Saffron Corm Multiplication Stage, up to 365 days in advance.'
+                    },
+                    {
+                      step: 'STEP 04 · COMMISSIONING & ALERTS',
+                      title: 'Go Live with Full Traceability',
+                      desc: 'Activate real-time monitoring, automated equipment responses, threshold notifications, and digital crop history logging from day one.'
+                    }
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-7 rounded-2xl bg-white border border-[#EAE0D2] flex flex-col justify-between space-y-4"
+                    >
+                      <div className="space-y-2.5">
+                        <div className="text-xs font-mono-tabular text-[#8B4500] font-semibold">
+                          {item.step}
                         </div>
                         <h3 className="font-display text-2xl font-semibold text-[#181615]">
-                          {selectedBatch.cultivar}
+                          {item.title}
                         </h3>
+                        <p className="text-xs sm:text-sm text-[#4A4540] leading-relaxed">
+                          {item.desc}
+                        </p>
                       </div>
-                      <span className="text-xs font-semibold text-[#8B4500]">
-                        ISO 3632 Category I Verified
-                      </span>
+                      <div className="text-xs font-mono-tabular text-[#8B4500]">
+                        Tailored to Your Facility →
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </div>
 
-                    <div className="overflow-x-auto mb-6">
-                      <table className="w-full text-left border-collapse">
-                        <thead>
-                          <tr className="border-b border-[#DFCBB2] text-[11px] text-[#635E59]">
-                            <th className="py-2.5 pr-4 font-medium">Assay Parameter</th>
-                            <th className="py-2.5 px-4 font-medium">Wavelength</th>
-                            <th className="py-2.5 px-4 font-medium">ISO Grade I Min</th>
-                            <th className="py-2.5 pl-4 font-medium text-right">Orhues Result</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-xs sm:text-sm divide-y divide-[#EAE0D2] font-mono-tabular">
-                          <tr>
-                            <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
-                              Crocin (Coloring Strength)
-                            </td>
-                            <td className="py-3 px-4 text-[#635E59]">440 nm</td>
-                            <td className="py-3 px-4 text-[#635E59]">≥ 200</td>
-                            <td className="py-3 pl-4 text-right font-semibold text-[#8B4500]">
-                              {selectedBatch.crocin440nm}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
-                              Picrocrocin (Bitterness)
-                            </td>
-                            <td className="py-3 px-4 text-[#635E59]">257 nm</td>
-                            <td className="py-3 px-4 text-[#635E59]">≥ 70</td>
-                            <td className="py-3 pl-4 text-right font-semibold text-[#181615]">
-                              {selectedBatch.picrocrocin257nm}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
-                              Safranal (Volatile Aroma)
-                            </td>
-                            <td className="py-3 px-4 text-[#635E59]">330 nm</td>
-                            <td className="py-3 px-4 text-[#635E59]">20 – 50</td>
-                            <td className="py-3 pl-4 text-right font-semibold text-[#181615]">
-                              {selectedBatch.safranal330nm}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className="py-3 pr-4 font-sans font-medium text-[#181615]">
-                              Moisture Content
-                            </td>
-                            <td className="py-3 px-4 text-[#635E59]">Gravimetric</td>
-                            <td className="py-3 px-4 text-[#635E59]">≤ 12.0%</td>
-                            <td className="py-3 pl-4 text-right font-semibold text-[#181615]">
-                              {selectedBatch.moisturePercent}%
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+              {/* 5. CTA & Interactive Cultivation Requirement Form + WhatsApp Button */}
+              <div
+                id="tech-requirement-form"
+                className="bg-white rounded-2xl border border-[#EAE0D2] p-6 sm:p-10 scroll-mt-28"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                  {/* Left Column: Direct Consultation Info */}
+                  <div className="lg:col-span-5 space-y-6">
+                    <h2 className="font-display text-3xl sm:text-4xl font-semibold text-[#181615]">
+                      Talk to Us About Your Cultivation Requirement →
+                    </h2>
+                    <p className="text-sm sm:text-base text-[#4A4540] leading-relaxed">
+                      Tell our CEA engineers and agronomists in Thrissur about your facility, target crop stage, and automation goals. We will prepare a tailored technology and parameter blueprint for your project.
+                    </p>
+                  </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#EAE0D2] text-xs">
-                      <div>
-                        <span className="text-[#635E59]">Assay Lead: </span>
-                        <span className="font-medium text-[#181615]">{selectedBatch.harvesterLead}</span>
+                  {/* Right Column: Cultivation Requirement Form */}
+                  <div className="lg:col-span-7 bg-[#FCF9F4] rounded-2xl border border-[#EAE0D2] p-6 sm:p-8">
+                    {techFormSubmitted ? (
+                      <div className="py-10 text-center space-y-4">
+                        <CheckCircle2 className="w-12 h-12 text-[#8B4500] mx-auto" />
+                        <h3 className="font-display text-3xl font-semibold text-[#181615]">
+                          Cultivation Requirement Received
+                        </h3>
+                        <p className="text-sm text-[#4A4540] max-w-md mx-auto leading-relaxed">
+                          Thank you, <strong>{techName}</strong>. Our CEA technology team in Thrissur has logged your <strong>{techCategory}</strong> requirement ({techStageFocus}) and will contact you at <strong>{techPhone || techEmail}</strong>.
+                        </p>
+                        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setTechFormSubmitted(false);
+                              setTechNotes('');
+                            }}
+                            className="px-6 py-3 rounded-full bg-[#8B4500] text-white text-xs font-bold uppercase tracking-wider cursor-pointer"
+                          >
+                            Submit Another Requirement
+                          </button>
+                          <a
+                            href="https://wa.me/918089964529?text=Hello%20Orhues%2C%20I%20just%20submitted%20my%20cultivation%20requirement%20on%20the%20Technology%20page."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-6 py-3 rounded-full bg-[#25D366] text-white text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2"
+                          >
+                            <span>Continue on WhatsApp</span>
+                          </a>
+                        </div>
                       </div>
-                      <div>
-                        <span className="text-[#635E59]">Protocol: </span>
-                        <span className="font-medium text-[#181615]">{selectedBatch.dryingProtocol}</span>
-                      </div>
-                    </div>
+                    ) : (
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          setTechFormSubmitted(true);
+                        }}
+                        className="space-y-4"
+                      >
+                        <h3 className="font-display text-2xl font-semibold text-[#181615] mb-1">
+                          Submit Your Cultivation Requirement
+                        </h3>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-semibold text-[#181615] mb-1.5">
+                              Full Name *
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={techName}
+                              onChange={(e) => setTechName(e.target.value)}
+                              placeholder="e.g., Vivek Menon"
+                              className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#DFCBB2] text-sm focus:outline-none focus:border-[#8B4500]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-semibold text-[#181615] mb-1.5">
+                              Phone / WhatsApp Number *
+                            </label>
+                            <input
+                              type="tel"
+                              required
+                              value={techPhone}
+                              onChange={(e) => setTechPhone(e.target.value)}
+                              placeholder="+91 98470 XXXXX"
+                              className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#DFCBB2] text-sm focus:outline-none focus:border-[#8B4500]"
+                            />
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-semibold text-[#181615] mb-1.5">
+                              Email Address *
+                            </label>
+                            <input
+                              type="email"
+                              required
+                              value={techEmail}
+                              onChange={(e) => setTechEmail(e.target.value)}
+                              placeholder="you@organization.com"
+                              className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#DFCBB2] text-sm focus:outline-none focus:border-[#8B4500]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-semibold text-[#181615] mb-1.5">
+                              Grower / Institution Category
+                            </label>
+                            <select
+                              value={techCategory}
+                              onChange={(e) => setTechCategory(e.target.value)}
+                              className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#DFCBB2] text-sm focus:outline-none focus:border-[#8B4500]"
+                            >
+                              <option value="Commercial Saffron Grower">
+                                Commercial Saffron Grower
+                              </option>
+                              <option value="Indoor Farm">Indoor Farm</option>
+                              <option value="Research & Experimental Cultivation">
+                                Research &amp; Experimental Cultivation
+                              </option>
+                              <option value="Controlled Environment Agriculture">
+                                Controlled Environment Agriculture
+                              </option>
+                              <option value="Agricultural Institution">
+                                Agricultural Institution
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-semibold text-[#181615] mb-1.5">
+                              Room Size / Planned Area (sq. ft.)
+                            </label>
+                            <input
+                              type="text"
+                              value={techRoomArea}
+                              onChange={(e) => setTechRoomArea(e.target.value)}
+                              placeholder="e.g., 250 sq. ft. indoor room"
+                              className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#DFCBB2] text-sm focus:outline-none focus:border-[#8B4500]"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-semibold text-[#181615] mb-1.5">
+                              Stage Parameter Focus
+                            </label>
+                            <select
+                              value={techStageFocus}
+                              onChange={(e) => setTechStageFocus(e.target.value)}
+                              className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#DFCBB2] text-sm focus:outline-none focus:border-[#8B4500]"
+                            >
+                              <option value="Both Flowering & Corm Multiplication Stages">
+                                Both Flowering &amp; Corm Multiplication Stages
+                              </option>
+                              <option value="Saffron Flowering Stage Only">
+                                Saffron Flowering Stage Only
+                              </option>
+                              <option value="Saffron Corm Multiplication Stage Only">
+                                Saffron Corm Multiplication Stage Only
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold text-[#181615] mb-1.5">
+                            Your Cultivation &amp; Automation Requirements
+                          </label>
+                          <textarea
+                            rows={4}
+                            value={techNotes}
+                            onChange={(e) => setTechNotes(e.target.value)}
+                            placeholder="Describe your existing room/equipment, required monitoring parameters (Temp, RH, CO2, Light, VPD, pH, EC), or 365-day scheduling goals..."
+                            className="w-full px-4 py-2.5 rounded-xl bg-white border border-[#DFCBB2] text-sm focus:outline-none focus:border-[#8B4500]"
+                          />
+                        </div>
+
+                        <div className="flex flex-wrap items-center gap-3 pt-2">
+                          <button
+                            type="submit"
+                            className="px-7 py-3.5 rounded-full bg-[#8B4500] hover:bg-[#6E3600] text-white text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                          >
+                            Talk to Us About Your Cultivation Requirement →
+                          </button>
+                          <a
+                            href="https://wa.me/918089964529?text=Hello%20Orhues%2C%20I%20would%20like%20to%20discuss%20my%20saffron%20cultivation%20requirements."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-5 py-3.5 rounded-full bg-[#25D366] hover:bg-[#1EBE5B] text-white text-xs font-bold uppercase tracking-wider inline-flex items-center gap-2 transition-colors"
+                          >
+                            <span>WhatsApp Direct</span>
+                          </a>
+                        </div>
+                      </form>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1760,6 +3351,7 @@ export default function App() {
         onUpdateQuantity={handleUpdateCartQuantity}
         onRemoveItem={handleRemoveCartItem}
         onClearCart={() => setCartItems([])}
+        onExploreShop={() => handleNavigate('Shop', 'all')}
       />
     </div>
   );
