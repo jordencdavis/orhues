@@ -1,4 +1,4 @@
-import heroImg from '../assets/images/hero_saffron_harvest_1791656835444.jpg';
+import heroImg from '../assets/images/hero.jpeg';
 import botanicalImg from '../assets/images/cultivation_botanical_closeup_1791656883136.jpg';
 import indoorImg from '../assets/images/indoor_aeroponic_saffron_1791657645029.jpg';
 import honeyImg from '../assets/images/product_saffron_honey_1791657619300.jpg';
@@ -10,6 +10,9 @@ import trainingImg from '../assets/images/bg_training_academy_1791658774822.jpg'
 import techImg from '../assets/images/bg_technology_iot_1791658787855.jpg';
 import mediaImg from '../assets/images/bg_media_editorial_1791658801024.jpg';
 import orhuesLogoImg from '../assets/images/orhues-logo.webp';
+import babyOilImg from '../assets/images/saffron_baby_oil_1792051769028.jpg';
+import kashmiriBoxImg from '../assets/images/kashmiri_saffron_box_1792051769522.jpg';
+import almondOilImg from '../assets/images/saffron_almond_oil_1792051769781.jpg';
 
 export type PageId =
   | 'Home'
@@ -42,7 +45,7 @@ export interface ProductVariant {
 export interface SaffronProduct {
   id: string;
   sku: string;
-  category: 'threads' | 'honey' | 'tea' | 'corms' | 'kits';
+  category: 'threads' | 'honey' | 'tea' | 'corms' | 'kits' | 'baby-oil' | 'almond-oil';
   categoryLabel: string;
   name: string;
   subtitle: string;
@@ -104,6 +107,9 @@ export const TRAINING_BG_IMAGE = trainingImg;
 export const TECH_BG_IMAGE = techImg;
 export const MEDIA_BG_IMAGE = mediaImg;
 export const ORHUES_LOGO = orhuesLogoImg;
+export const BABY_OIL_IMAGE = babyOilImg;
+export const KASHMIRI_BOX_IMAGE = kashmiriBoxImg;
+export const ALMOND_OIL_IMAGE = almondOilImg;
 
 export const PAGE_HERO_BACKGROUNDS: Record<PageId, string> = {
   Home: HERO_IMAGE,
@@ -128,187 +134,183 @@ export const PAGE_HERO_BACKGROUNDS: Record<PageId, string> = {
 export const PRODUCTS: SaffronProduct[] = [
   {
     id: 'orhues-kashmiri-mongra-threads',
-    sku: 'OR-TH-101',
+    sku: 'OR-KS-101',
     category: 'threads',
-    categoryLabel: 'SAFFRON THREADS',
-    name: 'Orhues Imperial Mongra Saffron Threads',
-    subtitle: 'All-crimson tripartite stigma filaments harvested at peak anthesis',
-    origin: 'Thrissur CEA Chamber & Pampore Terraces',
-    harvestPeriod: '2026 Precision Harvest',
+    categoryLabel: 'PURE KASHMIRI SAFFRON',
+    name: 'Orhues Pure Kashmiri Saffron (1g Luxury Box & Jar)',
+    subtitle: 'പ്രകൃതിയുടെ മാന്ത്രികത — 1g certified Grade I Kashmiri saffron threads with gift box, glass jar & wooden spoon',
+    origin: 'Heritage Pampore Terraces · Supported by Keralagro',
+    harvestPeriod: '2026 Golden Hour Harvest',
     gradeSummary: 'ISO 3632 Grade I · 292 Crocin',
-    image: MONGRA_IMAGE,
+    image: KASHMIRI_BOX_IMAGE,
     description:
-      'Cultivated using Orhues precision Controlled-Environment Agriculture (CEA) and heritage Pampore Karewa stock. Our Imperial Mongra threads contain zero yellow style, delivering extraordinary golden-crimson coloring power and rich safranal aroma.',
+      'Supported by Keralagro. Authentic Kashmiri Mongra crimson stigmas with high crocin coloring power, presented in an ornate purple floral gift box and crystal glass jar with gold screw lid and handcrafted wooden spice spoon.',
     agronomicOrCulinaryNotes: [
-      'Infuse 10–12 threads in warm milk or water (65°C) for 20 minutes to unlock full crocin pigments.',
-      'Accompanied by a brushed brass UV-protective canister and glazed porcelain micro-mortar.',
-      'Lab-certified free of artificial colorants, safflower, or moisture adulteration.'
+      'Infuse 8–10 threads in warm water or milk (65°C) for 20 minutes to release deep crimson crocin pigments.',
+      'Includes handcrafted wooden spice spoon and airtight gold-accented preservation jar.',
+      'Certified zero synthetic dyes (Tartrazine, Sunset Yellow free) with QR lot verification.'
     ],
     specs: {
       crocin: '292 (ISO I threshold ≥ 200)',
       safranal: '42.8 (ISO I range 20–50)',
       picrocrocin: '99.5 (ISO I threshold ≥ 70)',
       moisture: '7.6% (Max 12.0%)',
-      caliberOrCut: '18–22 mm detached dark crimson Mongra tips'
+      caliberOrCut: '1g Pure Mongra tri-filaments + wooden spoon'
     },
     variants: [
-      { id: 'km-1g', label: '1 Gram', weightOrCount: '1g Brass Tin (~450 threads)', price: 1350, unitNote: '₹1,350 / g', inStock: true },
-      { id: 'km-2g', label: '2 Grams', weightOrCount: '2g Brass Tin', price: 2450, unitNote: '₹1,225 / g', inStock: true },
-      { id: 'km-5g', label: '5 Grams + Mortar', weightOrCount: '5g + Porcelain Mortar', price: 5700, unitNote: '₹1,140 / g', inStock: true },
-      { id: 'km-10g', label: '10 Grams Reserve', weightOrCount: '10g + Porcelain Mortar', price: 10500, unitNote: '₹1,050 / g', inStock: true }
+      { id: 'km-1g', label: '1g Luxury Box', weightOrCount: '1g Jar + Box + Wooden Spoon', price: 1350, unitNote: '₹1,350 / box', inStock: true },
+      { id: 'km-2g', label: '2g Vault Pack', weightOrCount: '2g Jar + Box + Wooden Spoon', price: 2450, unitNote: '₹1,225 / g', inStock: true },
+      { id: 'km-5g', label: '5g Collector Box', weightOrCount: '5g Jar + Box + Wooden Spoon', price: 5700, unitNote: '₹1,140 / g', inStock: true }
     ]
   },
   {
     id: 'orhues-super-negin-threads',
-    sku: 'OR-TH-102',
-    category: 'threads',
-    categoryLabel: 'SAFFRON THREADS',
-    name: 'Orhues Super Negin Reserve Threads',
-    subtitle: 'Long unbroken crimson trumpet filaments cured in low-temp silk sieves',
-    origin: 'Orhues Indoor Aeroponic Estate, Kerala',
-    harvestPeriod: 'Autumn 2026',
-    gradeSummary: 'ISO 3632 Grade I · 284 Crocin',
-    image: NEGIN_IMAGE,
+    sku: 'OR-BO-101',
+    category: 'baby-oil',
+    categoryLabel: 'SAFFRON BABY OIL',
+    name: 'Orhues Saffron Baby Oil',
+    subtitle: 'Tradition in Every Gentle Touch — Infused with Premium Saffron & Almond Oil',
+    origin: 'Thrissur Atelier, Kerala',
+    harvestPeriod: '2026 Small-Batch Formulation',
+    gradeSummary: 'Ayurvedic Saffron Infusion · 100ml Pump',
+    image: BABY_OIL_IMAGE,
     description:
-      'Grown in sterile, pesticide-free vertical aeroponic chambers in Thrissur, Kerala, where temperature, humidity, and photon flux are tuned to replicate highland autumn mornings.',
+      'Formulated with authentic Orhues Grade I saffron threads and gentle cold-pressed botanical almond and coconut oils. Crafted for delicate infant skin, providing calming warmth, gentle nourishment, and radiant skin health with Kerala heritage care.',
     agronomicOrCulinaryNotes: [
-      'Ideal for daily wellness elixirs, artisanal desserts, biryanis, and skincare infusions.',
-      'Hand-picked within 3 hours of blossom opening to preserve delicate volatile terpenes.',
-      'Sealed in UV-shielded amber apothecary glass.'
+      'Dispense 2–3 pumps into palms, warm gently between hands, and massage in soothing rhythmic strokes.',
+      'Formulated according to authentic Ayurvedic traditions with 0% mineral oils, parabens, or synthetic perfumes.',
+      'Dermatologically tested and enriched with natural crocin bioactives.'
     ],
     specs: {
-      crocin: '284 (ISO I threshold ≥ 200)',
-      safranal: '39.4 (ISO I range 20–50)',
-      picrocrocin: '96.2 (ISO I threshold ≥ 70)',
-      moisture: '8.1% (Max 12.0%)',
-      caliberOrCut: '20 mm unbroken crimson trumpet filaments'
+      crocin: 'Pure Saffron Crocin Active Infusion',
+      safranal: 'Natural delicate botanical warmth',
+      picrocrocin: 'Zero synthetic perfumes or dyes',
+      moisture: '100% Water-Free Pure Oil Elixir',
+      caliberOrCut: '100ml UV-Protected Pump Dispenser'
     },
     variants: [
-      { id: 'sn-2g', label: '2 Grams', weightOrCount: '2g Amber Jar', price: 2000, unitNote: '₹1,000 / g', inStock: true },
-      { id: 'sn-5g', label: '5 Grams', weightOrCount: '5g Amber Jar', price: 4500, unitNote: '₹900 / g', inStock: true },
-      { id: 'sn-15g', label: '15 Grams', weightOrCount: '15g Estate Vault', price: 12100, unitNote: '₹807 / g', inStock: true }
+      { id: 'bo-100ml', label: '100 ml Pump Bottle', weightOrCount: '100ml Pump Bottle', price: 1250, unitNote: '₹1,250 / bottle', inStock: true },
+      { id: 'bo-200ml', label: '200 ml Duo Set', weightOrCount: '2 × 100ml Pack', price: 2200, unitNote: '₹1,100 / bottle', inStock: true }
     ]
   },
   {
     id: 'saffron-infused-honey',
-    sku: 'OR-HN-201',
-    category: 'honey',
-    categoryLabel: 'Saffron Infused Honey',
-    name: 'Orhues Artisanal Saffron Infused Honey',
-    subtitle: 'Raw Western Ghats multifloral nectar slow-macerated with Super Negin filaments',
-    origin: 'Thrissur, Kerala, India',
-    harvestPeriod: 'Small-Batch Cold Infusion',
-    gradeSummary: '1.5g Grade I Saffron per 250g Jar',
-    image: HONEY_IMAGE,
+    sku: 'OR-AO-201',
+    category: 'almond-oil',
+    categoryLabel: 'SAFFRON-INFUSED ALMOND OIL',
+    name: 'Orhues Saffron-Infused Almond Oil',
+    subtitle: 'A touch of saffron. A ritual of nourishment — 100ml amber dropper pump bottle',
+    origin: 'Kerala Estate & Western Ghats Botanical Reserve',
+    harvestPeriod: 'Small-Batch Cold Maceration',
+    gradeSummary: 'Cold-Pressed Sweet Almond · Whole Saffron Stigmas',
+    image: ALMOND_OIL_IMAGE,
     description:
-      'Unheated, raw forest and wildflower honey sourced from ethical apiaries in Kerala, cold-macerated for 28 days with Orhues Grade I crimson saffron threads. Rich in natural enzymes, antioxidants, and golden crocin bioactives.',
+      'Cold-pressed sweet almond oil slow-macerated with whole Orhues Grade I crimson saffron filaments. A luxurious daily ritual for radiant facial glow, cellular rejuvenation, and deep hair nourishment.',
     agronomicOrCulinaryNotes: [
-      'Stir one warm spoonful into herbal teas, drizzle over aged cheeses, charcuterie, or morning yogurt.',
-      'Never heated above 35°C—preserves both raw bee pollen diastase and saffron safranal.',
-      'Includes handcrafted wooden honey dipper.'
+      'Apply 3–4 drops to cleansed face as a nighttime botanical elixir, or massage gently into scalp and hair tips.',
+      'Rich in Vitamin E, oleic acids, and active crocin antioxidant compounds.',
+      'Housed in amber apothecary glass with metallic gold pump collar dispenser.'
     ],
     specs: {
-      crocin: '280+ Crocin threads suspended',
-      safranal: 'High-aroma cold extraction',
-      picrocrocin: 'Balanced floral-honeyed finish',
-      moisture: '17.2% Raw Honey Standard',
-      caliberOrCut: 'Whole Super Negin threads in raw nectar'
+      crocin: 'Grade I whole saffron stigma maceration',
+      safranal: 'Delicate warm nutty & floral bouquet',
+      picrocrocin: '100% virgin cold-pressed sweet almond base',
+      moisture: 'Zero preservatives or chemical stabilizers',
+      caliberOrCut: '100ml / 3.4 fl oz Amber Bottle'
     },
     variants: [
-      { id: 'hn-150g', label: '150g Faceted Jar', weightOrCount: '150g + Honey Dipper', price: 1850, unitNote: '₹1,850 / jar', inStock: true },
-      { id: 'hn-250g', label: '250g Reserve Jar', weightOrCount: '250g + Honey Dipper', price: 2850, unitNote: '₹2,850 / jar', inStock: true },
-      { id: 'hn-500g', label: '500g Gift Duo', weightOrCount: '2 × 250g Presentation Box', price: 5200, unitNote: '₹2,600 / jar', inStock: true }
+      { id: 'ao-100ml', label: '100 ml Bottle', weightOrCount: '100ml (~3.4 fl oz)', price: 1450, unitNote: '₹1,450 / bottle', inStock: true },
+      { id: 'ao-200ml', label: '200 ml Duo', weightOrCount: '2 × 100ml Duo', price: 2600, unitNote: '₹1,300 / bottle', inStock: true }
     ]
   },
   {
     id: 'luxury-saffron-tea',
-    sku: 'OR-TE-301',
-    category: 'tea',
-    categoryLabel: 'Luxury Saffron Tea',
-    name: 'Orhues Royal Kashmiri Kahwa & Luxury Saffron Tea',
-    subtitle: 'High-elevation whole green tea leaves, crushed green cardamom, cinnamon & pure saffron',
-    origin: 'Munnar High-Grown & Thrissur Atelier',
-    harvestPeriod: '2026 Botanical Blend',
-    gradeSummary: 'Whole-Leaf Blend · Pure Crimson Stigmas',
-    image: TEA_IMAGE,
+    sku: 'OR-KS-102',
+    category: 'threads',
+    categoryLabel: 'PURE KASHMIRI SAFFRON',
+    name: 'Orhues Imperial Kashmiri Saffron (2g Connoisseur Gift Box)',
+    subtitle: 'Supported by Keralagro — Certified ISO 3632 Grade I crimson threads in luxury packaging',
+    origin: 'Heritage Pampore Terraces · Supported by Keralagro',
+    harvestPeriod: '2026 Golden Hour Harvest',
+    gradeSummary: 'Grade I · 2g Glass Jar + Box',
+    image: KASHMIRI_BOX_IMAGE,
     description:
-      'An opulent ceremonial tea uniting high-grown Western Ghats whole-leaf tea, aromatic Kerala green cardamom pods, Ceylon cinnamon bark, rose petals, and generous threads of Orhues Grade I saffron inside a porcelain-and-gold keepsake caddy.',
+      'Packaged under partnership standards supported by Keralagro. Authentic Kashmiri Mongra crimson stigmas with high crocin coloring power, presented in an illustrated purple floral gift box and crystal glass jar with wooden sampling spoon.',
     agronomicOrCulinaryNotes: [
-      'Steep 2.5 grams in 200 ml water at 85°C for 4 minutes; garnish with slivered almonds.',
-      'Naturally caffeine-moderate and soothing for evening relaxation and digestive wellness.',
-      'Presented in a reusable ornate gold-accented ceramic caddy.'
+      'Perfect for festive gifting, culinary royalty, golden milk, and daily health.',
+      'Lab verified zero synthetic dyes (tartrazine, sunset yellow free).',
+      'Includes authenticated QR batch trace code on package.'
     ],
     specs: {
-      crocin: 'Pure Grade I Saffron threads (3.5% w/w)',
-      safranal: 'Aromatic cardamom & safranal bouquet',
-      picrocrocin: 'Zero artificial flavoring oils',
-      moisture: '4.2% nitrogen-sealed freshness',
-      caliberOrCut: 'Whole leaf + whole crimson stigma threads'
+      crocin: '292 Category I coloring power',
+      safranal: '41.5 rich safranal aroma',
+      picrocrocin: '98.0 natural bitter-tonic bioactive',
+      moisture: '8.2% optimal curing standard',
+      caliberOrCut: '2g Pure whole crimson filaments'
     },
     variants: [
-      { id: 'te-100g', label: '100g Royal Caddy', weightOrCount: '100g (~45 cups)', price: 2650, unitNote: '₹2,650 / caddy', inStock: true },
-      { id: 'te-250g', label: '250g Connoisseur Vault', weightOrCount: '250g (~110 cups)', price: 5700, unitNote: '₹5,700 / vault', inStock: true }
+      { id: 'ks-2g', label: '2 Grams Box', weightOrCount: '2g Jar + Spoon + Box', price: 2550, unitNote: '₹1,275 / g', inStock: true },
+      { id: 'ks-5g', label: '5 Grams Box', weightOrCount: '5g Jar + Box', price: 5900, unitNote: '₹1,180 / g', inStock: true }
     ]
   },
   {
     id: 'mother-corms-caliber-10',
-    sku: 'OR-CM-401',
-    category: 'corms',
-    categoryLabel: 'Certified Planting Corms',
-    name: 'Crocus Sativus Mother Corms (Caliber 10/+)',
-    subtitle: 'Vernalized, pathogen-screened high-yield bulbs for indoor aeroponics or raised beds',
-    origin: 'Orhues Propagating Nursery',
-    harvestPeriod: 'Pre-Chilled & Ready for Tray/Bed',
-    gradeSummary: '32–38mm Diameter · 18g+ Weight',
-    image: CORMS_IMAGE,
+    sku: 'OR-BO-102',
+    category: 'baby-oil',
+    categoryLabel: 'SAFFRON BABY OIL',
+    name: 'Orhues Saffron Baby Oil — Deluxe Infant Massage Pack',
+    subtitle: 'Tradition in Every Gentle Touch — Ultra-gentle calming formula for newborn & toddler wellness',
+    origin: 'Thrissur, Kerala',
+    harvestPeriod: 'Artisanal Botanical Cure',
+    gradeSummary: '200ml Family Value Pack · Pump Bottle',
+    image: BABY_OIL_IMAGE,
     description:
-      'Specially graded for both indoor vertical aeroponic farming and outdoor well-drained raised beds. Each Caliber 10/+ mother corm weighs over 18 grams and initiates 2 to 3 blossoms in its very first flowering cycle.',
+      'Enriched with Kerala saffron extracts, cold-pressed almond oil, and pure botanical emollients. Soothes sensitive infant skin, supports restful sleep, and preserves natural skin moisture barrier.',
     agronomicOrCulinaryNotes: [
-      'Pre-screened against Fusarium rot and viral mosaic; ideal for CEA chiller rooms.',
-      'Includes Orhues temperature-humidity schedule and post-harvest corm multiplication guide.',
-      'Accompanied by phytosanitary dispatch clearance across India.'
+      'Hypoallergenic, non-comedogenic, and pediatrician approved formulation.',
+      'Can be used daily before warm bath or after as a protective moisture sealant.',
+      'Easy-dispense locking pump prevents accidental spills.'
     ],
     specs: {
-      crocin: 'Genetic potential ≥ 285 Crocin',
-      safranal: 'High-terpene clonal lineage',
-      picrocrocin: 'Certified pathogen-free stock',
-      moisture: 'Cured tunic at 65% RH',
-      caliberOrCut: 'Caliber 10/11+ (18g–24g per corm)'
+      crocin: 'Natural Crocin skin-calming compounds',
+      safranal: 'Mild natural saffron aroma',
+      picrocrocin: 'No artificial fragrance or essential oil irritants',
+      moisture: 'Water-free cold-infused oil',
+      caliberOrCut: '200ml High-Capacity Bottle'
     },
     variants: [
-      { id: 'cm-50', label: '50 Mother Corms', weightOrCount: '1 Aeroponic Tray / 1 m²', price: 3200, unitNote: '₹64 / corm', inStock: true },
-      { id: 'cm-250', label: '250 Mother Corms', weightOrCount: '5 Trays / 5 m² Plot', price: 13800, unitNote: '₹55 / corm', inStock: true },
-      { id: 'cm-1000', label: '1,000 Commercial Crate', weightOrCount: '20 Trays / Commercial Starter', price: 45000, unitNote: '₹45 / corm', inStock: true }
+      { id: 'bo-200ml-deluxe', label: '200 ml Pack', weightOrCount: '200ml Pump Bottle', price: 2150, unitNote: '₹2,150 / pack', inStock: true },
+      { id: 'bo-trio', label: '3 × 100ml Nursery Set', weightOrCount: '300ml Total', price: 3100, unitNote: '₹1,033 / bottle', inStock: true }
     ]
   },
   {
     id: 'aeroponic-starter-kit',
-    sku: 'OR-KT-501',
-    category: 'kits',
-    categoryLabel: 'Indoor Cultivation Kit',
-    name: 'Orhues Indoor Vertical Saffron Starter System',
-    subtitle: '100 Caliber 10/+ corms, food-grade aeroponic rooting trays, lux sensor & stigma tweezers',
-    origin: 'Orhues R&D Lab, Thrissur',
-    harvestPeriod: 'Year-Round Indoor Setup',
-    gradeSummary: '100 Corms + Modular Tray Hardware',
-    image: INDOOR_TECH_IMAGE,
+    sku: 'OR-AO-202',
+    category: 'almond-oil',
+    categoryLabel: 'SAFFRON-INFUSED ALMOND OIL',
+    name: 'Orhues Saffron-Infused Almond Oil — Connoisseur Ritual',
+    subtitle: 'A touch of saffron. A ritual of nourishment — Dual-pack intensive Ayurvedic restoration',
+    origin: 'Western Ghats Botanical Nursery',
+    harvestPeriod: 'Cold Maceration Release',
+    gradeSummary: 'High Potency Saffron Infusion · 200ml Duo',
+    image: ALMOND_OIL_IMAGE,
     description:
-      'Designed by Orhues engineers in Thrissur for aspiring indoor saffron growers and trainees. Allows you to test soilless controlled-environment saffron flowering before scaling to a commercial 100 sq. ft. or 500 sq. ft. chamber.',
+      'Our master-batch cold-macerated almond oil infused with selected high-crocin saffron filaments. Recommended for intensive Ayurvedic facial massage (Kumkumadi ritual) and hair revitalization.',
     agronomicOrCulinaryNotes: [
-      'Includes 100 Caliber 10/+ mother corms and 2 stackable food-grade perforated rooting trays.',
-      'Contains surgical bent-tip stigma forceps, digital thermo-hygrometer, and Orhues SOP manual.',
-      'Includes 1-on-1 virtual agronomy check-in with our Thrissur technical team.'
+      'Use with Kansa wand or jade roller for lymphatic stimulation and collagen support.',
+      'Provides deep non-greasy hydration and helps even skin tone and hyperpigmentation.',
+      'Sealed in twin UV-resistant amber apothecary glass bottles.'
     ],
     specs: {
-      crocin: 'Calibrated for 48°C dehydrator cure',
-      safranal: 'Includes amber curing jar',
-      picrocrocin: 'Soilless aeroponic protocol',
-      moisture: 'Digital hygrometer included',
-      caliberOrCut: '100x Caliber 10/+ Corms + 2 Trays'
+      crocin: 'High-density active saffron bioactives',
+      safranal: 'Warm soothing terpene profile',
+      picrocrocin: 'Unrefined cold-pressed California sweet almond',
+      moisture: '100% pure botanical lipids',
+      caliberOrCut: '2 × 100ml Presentation Box'
     },
     variants: [
-      { id: 'kt-100', label: '100-Corm Starter Kit', weightOrCount: '2 Trays + Tooling', price: 9800, unitNote: '₹9,800 Complete Kit', inStock: true },
-      { id: 'kt-300', label: '300-Corm Pilot Rack', weightOrCount: '6 Trays + LED Bar', price: 23800, unitNote: '₹23,800 Bundle', inStock: true }
+      { id: 'ao-trio', label: '2 × 100ml Duo Set', weightOrCount: '200ml Total Set', price: 2750, unitNote: '₹1,375 / bottle', inStock: true },
+      { id: 'ao-vault', label: '3 × 100ml Grand Box', weightOrCount: '300ml Total Set', price: 3850, unitNote: '₹1,283 / bottle', inStock: true }
     ]
   }
 ];

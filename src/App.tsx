@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   PRODUCTS,
   LAB_BATCHES,
@@ -81,6 +81,31 @@ export default function App() {
   // Cart state — initialized empty so items are only added when explicitly clicked by the user
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+
+  // Hero viewport visibility to trigger zoom-in and hold, and reset once scrolled out
+  const [heroInView, setHeroInView] = useState<boolean>(true);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (activePage !== 'Home') return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // When entry.isIntersecting changes, set state so zoom re-triggers whenever it re-enters view
+        setHeroInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.15
+      }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [activePage]);
 
   // Sync browser tab title with ORHUES branding and active page
   useEffect(() => {
@@ -201,7 +226,7 @@ export default function App() {
   const handleRemoveCartItem = (productId: string, variantId: string) => {
     setCartItems((prev) =>
       prev.filter(
-        (item) => !(item.product.id === productId && item.variant.id === variant.id)
+        (item) => !(item.product.id === productId && item.variant.id === variantId)
       )
     );
   };
@@ -242,12 +267,10 @@ export default function App() {
             aria-label="Filter Orhues products by category"
           >
             {[
-              { id: 'all', label: 'All' },
-              { id: 'threads', label: 'Saffron Threads' },
-              { id: 'honey', label: 'Saffron Honey' },
-              { id: 'tea', label: 'Luxury Tea' },
-              { id: 'corms', label: 'Mother Corms' },
-              { id: 'kits', label: 'CEA Kits' }
+              { id: 'all', label: 'All Offerings' },
+              { id: 'threads', label: 'Kashmiri Saffron' },
+              { id: 'baby-oil', label: 'Saffron Baby Oil' },
+              { id: 'almond-oil', label: 'Saffron Almond Oil' }
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -271,9 +294,9 @@ export default function App() {
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search saffron, honey, tea..."
+              placeholder="Search saffron, baby oil, almond oil..."
               aria-label="Search Orhues offerings"
-              className="w-full sm:w-52 pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#E5D7C5] text-xs text-[#181615] placeholder:text-[#635E59] focus:outline-none focus:border-[#8B4500]"
+              className="w-full sm:w-56 pl-9 pr-3.5 py-2 rounded-xl bg-white border border-[#E5D7C5] text-xs text-[#181615] placeholder:text-[#635E59] focus:outline-none focus:border-[#8B4500]"
             />
           </div>
         </div>
@@ -307,7 +330,7 @@ export default function App() {
             return (
               <article
                 key={product.id}
-                className="group bg-white rounded-2xl border border-[#EAE0D2] overflow-hidden flex flex-col justify-between transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-md"
+                className="group bg-white rounded-2xl border border-[#EAE0D2] overflow-hidden flex flex-col justify-between transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-md h-full"
               >
                 <div>
                   <div
@@ -479,28 +502,31 @@ export default function App() {
           <>
             {/* Hero Section as Full-Background div (main > div:nth-of-type(1)) */}
             <div
+              ref={heroRef}
               className="relative w-full pt-14 pb-16 sm:pt-20 sm:pb-24 border-b border-[#EAE0D2] bg-cover bg-center bg-no-repeat overflow-hidden"
               style={{ backgroundImage: `url(${HERO_IMAGE})` }}
             >
               <ResilientImage
                 src={HERO_IMAGE}
-                alt="Purple Crocus sativus saffron blossoms and freshly harvested crimson stigmas at dawn"
-                fallbackTitle="Orhues Saffron Harvest & Cultivation"
-                className="absolute inset-0 w-full h-full object-cover"
+                alt="Orhues Pure Kashmiri Saffron with collectible box, crystal jar with gold lid, wooden spoon, and blooming saffron terraces"
+                fallbackTitle="Orhues Pure Kashmiri Saffron"
+                className={`absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ${
+                  heroInView ? 'animate-hero-zoom-in' : 'scale-100'
+                }`}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#181615]/90 via-[#181615]/75 to-[#181615]/45" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#181615]/55 via-[#181615]/40 to-[#181615]/15" />
 
               <div className="relative z-10 max-w-[1280px] mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end mb-12">
                   <div className="lg:col-span-8 py-2">
-                    <div className="text-xs text-[#E8C284] font-semibold tracking-wider uppercase mb-4">
+                    <div className="text-xs text-[#E8C284] font-semibold tracking-wider uppercase mb-4 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
                       <span>ORHUES — RARE. REDEFINED. REVERED.</span>
                       <span className="mx-2" aria-hidden="true">·</span>
                       <span>Thrissur, Kerala</span>
                     </div>
 
                     <h1
-                      className="font-display font-semibold text-white tracking-tight leading-[1.08] mb-6"
+                      className="font-display font-semibold text-white tracking-tight leading-[1.08] mb-6 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
                       style={{
                         fontSize: 'clamp(2.5rem, 4.5vw, 4rem)',
                         textWrap: 'balance'
